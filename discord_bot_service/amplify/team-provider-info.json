@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pomodoroschedulerbot-dev-121926-authRole",
+      "UnauthRoleArn": "arn:aws:iam::278223133482:role/amplify-pomodoroschedulerbot-dev-121926-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::278223133482:role/amplify-pomodoroschedulerbot-dev-121926-authRole",
+      "Region": "ca-central-1",
+      "DeploymentBucketName": "amplify-pomodoroschedulerbot-dev-121926-deployment",
+      "UnauthRoleName": "amplify-pomodoroschedulerbot-dev-121926-unauthRole",
+      "StackName": "amplify-pomodoroschedulerbot-dev-121926",
+      "StackId": "arn:aws:cloudformation:ca-central-1:278223133482:stack/amplify-pomodoroschedulerbot-dev-121926/8210bd80-a302-11ec-9aa4-027ed62efbd6",
+      "AmplifyAppId": "d36ae0eyap1uu"
+    },
+    "categories": {
+      "auth": {
+        "pomodoroschedulerbot37304261": {}
+      }
+    }
+  }
+}

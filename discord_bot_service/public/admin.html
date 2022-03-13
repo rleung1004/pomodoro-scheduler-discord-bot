@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.ui.min.js"></script>
+
+    <script src="js/admin.js"></script>
+    <title>Admin</title>
+</head>
+
+<body>
+    <!-- Login form source  -->
+    <!-- https://codepen.io/mikekoro/pen/zxpvxw -->
+
+    <br><br><br>
+    <p class="about">Click "Don't have an account" to switch between forms.</p>
+
+    <div class="page-transition"></div>
+
+    <div class="container">
+
+        <div class="formHolder signup">
+            <br><br><br>
+            <h3>Sign Up</h3>
+
+            <div class="form-group">
+                <input type="text" class="form-control simplebox" id="username" placeholder="Username">
+            </div>
+            <br><br>
+
+            <div class="form-group">
+                <input type="password" class="form-control simplebox" id="password" placeholder="Password">
+            </div>
+            <br><br>
+
+            <div class="form-group">
+                <input type="password" class="form-control simplebox" id="password" placeholder="Confirm Password">
+            </div>
+            <br><br>
+
+            <button type="submit" id="signupButton" class="btn btn-sm btn-default simplebutton newAccButton">
+                Sign Up
+            </button><button type="submit" class="btn btn-sm btn-link loginButton" id="showLogin">Already have an account?</button>
+
+        </div>
+        <div class="formHolder login">
+
+            <h3>Login</h3>
+
+            <div class="form-group">
+                <input type="text" class="form-control simplebox" id="username" placeholder="Username">
+            </div>
+            <br><br>
+
+            <div class="form-group">
+                <input type="password" class="form-control simplebox" id="password" placeholder="Password">
+            </div>
+            <br><br>
+
+            <button type="submit" id="loginButton" class="btn btn-sm btn-default simplebutton loginButton">
+                Login
+            </button><button type="submit" class="btn btn-sm btn-link newAccButton" id="showSignUp">Don't have an account?</button>
+
+        </div>
+
+        <div class="formHolder signUp">
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
