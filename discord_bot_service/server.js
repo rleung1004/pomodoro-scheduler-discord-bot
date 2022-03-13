@@ -12,7 +12,9 @@ app.use(express.urlencoded({
 app.get("/", (req, res) => {
     res.json({message: "hi there"})
 });
+
 require("./app/routes/commitment.routes.js")(app);
+require("./app/routes/requests.routes.js")(app);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

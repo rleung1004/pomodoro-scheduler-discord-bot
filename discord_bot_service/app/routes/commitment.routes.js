@@ -3,5 +3,5 @@ module.exports = app => {
     let router = require("express").Router();
 
     router.post("/", commitments.create);
-    router.get("/", commitments.findAll);
+    router.get("/", commitments.getAll);
 };

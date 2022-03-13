@@ -1,4 +1,5 @@
 const Commitment = require("../models/commitment.model.js");
+
 exports.create = (req, res) => {
     if (!req.body) {
         res.status(400).send({
@@ -21,7 +22,7 @@ exports.create = (req, res) => {
     });
 };
 
-exports.findAll = (req, res) => {
+exports.getAll = (req, res) => {
     const title = req.query.title;
     Commitment.getAll(title, (err, data) => {
         if (err) {

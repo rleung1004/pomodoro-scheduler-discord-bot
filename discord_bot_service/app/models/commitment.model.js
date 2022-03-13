@@ -7,6 +7,13 @@ const Commitment = function(commitment) {
 };
 
 Commitment.create = (newCommitment, result) => {
+
+    sql.query('UPDATE requests SET count = count + 1 WHERE route = "commitment/create";', (err, res) => {
+        if (err) {
+            throw err;
+        }
+    })
+
     sql.query("INSERT INTO commitment SET ?", newCommitment, (err, res) => {
         if (err) {
             console.log("error: ", err);
@@ -22,6 +29,13 @@ Commitment.create = (newCommitment, result) => {
 }
 
 Commitment.findById = (id, result) => {
+
+    sql.query('UPDATE requests SET count = count + 1 WHERE route = "commitment/findById";', (err, res) => {
+        if (err) {
+            throw err;
+        }
+    })
+
     sql.query(`SELECT * FROM commitments WHERE id = ${id}`, (err, res) =>{
         if (err) {
             console.log("error: ", err);
@@ -42,6 +56,13 @@ Commitment.getAll = (title, result) => {
     if (title) {
         query += `WHERE title LIKE '%${title}'`;
     }
+
+    sql.query('UPDATE requests SET count = count + 1 WHERE route = "commitment/getAll";', (err, res) => {
+        if (err) {
+            throw err;
+        }
+    })
+
     sql.query(query, (err, res) => {
         if (err) {
             console.log("error: ", err);
@@ -56,4 +77,5 @@ Commitment.getAll = (title, result) => {
         result({kind: "not_found"}, null);
     });
 }
+
 module.exports = Commitment;
