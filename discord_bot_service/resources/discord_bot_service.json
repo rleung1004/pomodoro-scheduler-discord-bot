@@ -1,0 +1,338 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a server for the Pomodoro Discord Bot to update and get Pomodoro schedules of a user.",
+    "version": "1.0.0",
+    "title": "Pomodoro Scheduler Discord Bot",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "rleung95@my.bcit.ca"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "pomodoro-discord-bot.io",
+  "basePath": "/v1",
+  "tags": [
+    {
+      "name": "commitment",
+      "description": "Operations to update commitments of a user",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "goal",
+      "description": "Operations to update goals of a user",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    },
+    {
+      "name": "schedule",
+      "description": "Operations to update and read a user's schedule",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": ["https"],
+  "paths": {
+    "/commitment": {
+      "put": {
+        "tags": ["commitment"],
+        "summary": "Add a commitment to the user's schedule",
+        "description": "",
+        "operationId": "addCommitment",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Commitment"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "scheduler_auth": ["write:schedules", "read:schedules"]
+          }
+        ]
+      },
+      "patch": {
+        "tags": ["commitment"],
+        "summary": "Update an existing commitment to a user's schedule",
+        "description": "",
+        "operationId": "updateCommitment",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Commitment object that needs to be added to the user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Commitment"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Commitment not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "scheduler_auth": ["write:schedules", "read:schedules"]
+          }
+        ]
+      }
+    },
+    "/commitment/{commitmentId}": {
+      "delete": {
+        "tags": ["commitment"],
+        "summary": "Delete an existing commitment to a user's schedule",
+        "description": "",
+        "operationId": "deleteCommitment",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "commitmentId",
+            "in": "path",
+            "description": "ID of commitment to delete",
+            "required": true,
+            "type": "string",
+            "format": "uuidv4"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Commitment not found"
+          }
+        }
+      }
+    },
+    "/goal": {
+      "put": {
+        "tags": ["goal"],
+        "summary": "Add a goal to the user's schedule",
+        "description": "",
+        "operationId": "addGoal",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Goal"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "scheduler_auth": ["write:schedules", "read:schedules"]
+          }
+        ]
+      },
+      "patch": {
+        "tags": ["goal"],
+        "summary": "Update an existing goal to a user's schedule",
+        "description": "",
+        "operationId": "updateGoal",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Goal object that needs to be added to the user",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Goal"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Commitment not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        },
+        "security": [
+          {
+            "scheduler_auth": ["write:schedules", "read:schedules"]
+          }
+        ]
+      }
+    },
+    "/goal/{goalId}": {
+      "delete": {
+        "tags": ["goal"],
+        "summary": "Delete an existing goal to a user's schedule",
+        "description": "",
+        "operationId": "deleteGoal",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "goalId",
+            "in": "path",
+            "description": "ID of goal to delete",
+            "required": true,
+            "type": "string",
+            "format": "uuidv4"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Commitment not found"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "scheduler_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:schedules": "modify schedule in your account",
+        "read:schedules": "read your schedule"
+      }
+    }
+  },
+  "definitions": {
+    "Commitment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuidv4"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of commitment"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of commitment"
+        },
+        "notes": {
+          "type": "string",
+          "format": "Notes about the commitment from the user"
+        },
+        "repeat": {
+          "type": "string",
+          "description": "Repeat type of commitment",
+          "enum": [
+            "NEVER",
+            "DAILY",
+            "MON",
+            "TUES",
+            "WED",
+            "THURS",
+            "FRI",
+            "SAT",
+            "SUN"
+          ]
+        },
+        "url": {
+          "type": "string",
+          "description": "URL of commitment"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "Goal": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuidv4"
+        },
+        "location": {
+          "type": "string",
+          "description": "Location of goal"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of goal"
+        },
+        "notes": {
+          "type": "string",
+          "format": "Notes about the goal from the user"
+        },
+        "url": {
+          "type": "string",
+          "description": "URL of goal"
+        },
+        "priority": {
+          "type": "string",
+          "description": "Priority of goal",
+          "enum": ["LOW", "MEDIUM", "HIGH"]
+        },
+        "totalTimeInMinutes": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "deadline": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
