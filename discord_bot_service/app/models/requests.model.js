@@ -1,8 +1,8 @@
-const sql = require("./db.js");
+import sql from "./db.js";
 
 const Requests = function(request) {
     this.route = request.route,
-    this.count = request.count
+        this.count = request.count
 };
 
 Requests.getAll = (route, result) => {
@@ -21,8 +21,8 @@ Requests.getAll = (route, result) => {
             return;
         }
         // else not found:
-        result({kind: "not_found"}, null);
+        result({ kind: "not_found" }, null);
     });
 }
 
-module.exports = Requests;
+export default Request;

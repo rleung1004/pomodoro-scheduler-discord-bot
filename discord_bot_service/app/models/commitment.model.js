@@ -1,9 +1,9 @@
-const sql = require("./db.js");
+import sql from "./db.js";
 
 const Commitment = function(commitment) {
     this.title = commitment.title,
-    this.date = commitment.date,
-    this.info = commitment.info
+        this.date = commitment.date,
+        this.info = commitment.info
 };
 
 Commitment.create = (newCommitment, result) => {
@@ -24,7 +24,7 @@ Commitment.create = (newCommitment, result) => {
             id: res.insertId,
             ...newCommitment
         });
-        result(null, {id: res.insertId, ...newCommitment});
+        result(null, { id: res.insertId, ...newCommitment });
     })
 }
 
@@ -36,7 +36,7 @@ Commitment.findById = (id, result) => {
         }
     })
 
-    sql.query(`SELECT * FROM commitments WHERE id = ${id}`, (err, res) =>{
+    sql.query(`SELECT * FROM commitments WHERE id = ${id}`, (err, res) => {
         if (err) {
             console.log("error: ", err);
             return;
@@ -47,7 +47,7 @@ Commitment.findById = (id, result) => {
             return;
         }
         // else not found:
-        result({kind: "not_found"}, null);
+        result({ kind: "not_found" }, null);
     });
 }
 
@@ -74,7 +74,7 @@ Commitment.getAll = (title, result) => {
             return;
         }
         // else not found:
-        result({kind: "not_found"}, null);
+        result({ kind: "not_found" }, null);
     });
 }
 
