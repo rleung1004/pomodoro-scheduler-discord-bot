@@ -19,8 +19,8 @@ $('document').ready(function() {
         }, {
             duration: 500,
             complete: function() {
-                let username = document.getElementById('username').value;
-                let password = document.getElementById('password').value;
+                let username = document.getElementById('login-username').value;
+                let password = document.getElementById('login-password').value;
                 signin(username, password);
             }
 
