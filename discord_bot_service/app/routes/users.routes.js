@@ -45,7 +45,7 @@ router.post('/signin', function(req, res, next) {
             Auth.signIn(username, password)
                 .then(user => {
                     console.log(user);
-                    res.redirect(`${BASE_ROUTE}/admin`);
+                    res.send({ "user": user });
                 }).catch(err => {
                     console.log(err);
                 });
