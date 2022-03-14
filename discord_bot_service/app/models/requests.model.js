@@ -12,8 +12,8 @@ Requests.getAll = (result) => {
       return;
     }
     if (res.length) {
-      console.log("found requests: ", res[0]);
-      result(null, res[0]);
+      console.log("found requests: ", res);
+      result(null, res);
       return;
     }
     // else not found:
