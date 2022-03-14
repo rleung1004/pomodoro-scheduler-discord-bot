@@ -1,6 +1,7 @@
 import { Auth } from "aws-amplify";
 import express from "express";
 import sql from "../models/db.js";
+import getAll from "../models/requests.controller.js";
 
 var router = express.Router();
 
@@ -51,7 +52,7 @@ router.post("/signin", function (req, res, next) {
       Auth.signIn(username, password)
         .then((user) => {
           console.log(user);
-          res.send({ user: user });
+          getAll(req, res);
         })
         .catch((err) => {
           console.log(err);
