@@ -78,4 +78,4 @@ Commitment.getAll = (title, result) => {
     });
 }
 
-module.exports = Commitment;
+export default Commitment;
