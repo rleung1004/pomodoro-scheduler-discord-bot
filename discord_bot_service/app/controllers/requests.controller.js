@@ -1,7 +1,6 @@
-const Requests = require("../models/requests.model.js");
+import Requests from "../models/requests.model.js";
 
-
-exports.getAll = (req, res) => {
+let getAll = (req, res) => {
     const route = req.query.route;
     Requests.getAll(route, (err, data) => {
         if (err) {
@@ -10,7 +9,8 @@ exports.getAll = (req, res) => {
             });
         } else {
             res.send(data);
-        }   
+        }
     })
 };
 
+export default getAll(req, res);

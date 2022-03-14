@@ -1,6 +1,6 @@
-module.exports = app => {
-    const requests = require("../controllers/requests.controller.js");
-    let router = require("express").Router();
+import requests from "../controllers/requests.controller.js";
+var router = express.Router();
 
-    router.get("/", requests.getAll);
-};
+router.get("/", requests.getAll);
+
+export default router;
