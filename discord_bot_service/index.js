@@ -9,7 +9,6 @@ import commitmentRoutes from "./app/routes/commitments.routes.js";
 import requestRoutes from "./app/routes/requests.routes.js";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import * as swaggerDocument from "./resources/discord_bot_service.json";
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -28,6 +27,7 @@ app.use(express.json());
 const PORT = 9000;
 const BASE_ROUTE = "/4537/API/V1";
 
+const swaggerDocument = require("./resources/discord_bot_service.json");
 // generate live API documentation using Swagger UI
 app.use(
   BASE_ROUTE + "/api-docs",
