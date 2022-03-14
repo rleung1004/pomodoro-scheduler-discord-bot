@@ -6,8 +6,8 @@ import path from "path";
 import cors from "cors";
 import { fileURLToPath } from 'url';
 import userRoutes from "./app/routes/users.routes.js";
-import commitmentRoutes from "./app/routes/commit.routes.js";
-import requestRoutes from "./app/routes/request.routes.js";
+import commitmentRoutes from "./app/routes/commitments.routes.js";
+import requestRoutes from "./app/routes/requests.routes.js";
 import adminRoutes from "./app/routes/admin.routes.js";
 
 

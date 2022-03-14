@@ -25,4 +25,4 @@ Requests.getAll = (route, result) => {
     });
 }
 
-export default Request;
+export default Requests;

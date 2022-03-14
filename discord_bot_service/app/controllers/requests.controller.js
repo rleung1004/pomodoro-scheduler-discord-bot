@@ -1,6 +1,6 @@
 import Requests from "../models/requests.model.js";
 
-let getAll = (req, res) => {
+export default function getAll(req, res) {
     const route = req.query.route;
     Requests.getAll(route, (err, data) => {
         if (err) {
@@ -12,5 +12,3 @@ let getAll = (req, res) => {
         }
     })
 };
-
-export default getAll(req, res);
