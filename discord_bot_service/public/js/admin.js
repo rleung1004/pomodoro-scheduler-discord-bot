@@ -147,11 +147,6 @@ function signin(username, password) {
     .then((res) => {
       const myNode = document.getElementById("body");
       myNode.innerHTML = JSON.stringify(res);
-      for (let keys in res) {
-        const div = document.createElement("div");
-        div.innerText = res[keys].title;
-        document.body.appendChild(div);
-      }
     })
     .catch((err) => {
       console.error(err);

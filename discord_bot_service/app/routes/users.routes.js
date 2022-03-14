@@ -52,7 +52,13 @@ router.post("/signin", function (req, res, next) {
       Auth.signIn(username, password)
         .then((user) => {
           console.log(user);
-          getAll(req, res);
+          const groups =
+            user.signInUserSession.accessToken.payload["cognito:groups"];
+          if (groups.includes("admin")) {
+            getAll(req, res);
+          } else {
+            res.status(401).status({ message: "Unauthorized access" });
+          }
         })
         .catch((err) => {
           console.log(err);
