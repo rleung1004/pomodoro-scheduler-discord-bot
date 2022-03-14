@@ -4,11 +4,8 @@ const Requests = function (request) {
   (this.route = request.route), (this.count = request.count);
 };
 
-Requests.getAll = (route, result) => {
+Requests.getAll = (result) => {
   let query = "SELECT * FROM request";
-  if (route) {
-    query += `WHERE route LIKE '%${route}'`;
-  }
   sql.query(query, (err, res) => {
     if (err) {
       console.log("error: ", err);
