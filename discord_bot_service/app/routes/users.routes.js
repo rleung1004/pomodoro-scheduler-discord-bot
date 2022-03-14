@@ -1,7 +1,7 @@
 import { Auth } from "aws-amplify";
 import express from "express";
 import sql from "../models/db.js";
-import getAll from "../models/requests.controller.js";
+import getAll from "../controllers/requests.controller.js";
 
 var router = express.Router();
 
