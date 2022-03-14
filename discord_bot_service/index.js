@@ -1,5 +1,5 @@
 import { Amplify } from "aws-amplify";
-import awsExports from "./src/aws-exports.cjs";
+import awsExports from "./src/aws-exports.js";
 import { Auth } from 'aws-amplify';
 import express from "express";
 import path from "path";
@@ -11,10 +11,10 @@ import adminRoutes from "./routes/admin.js";
 const __filename = fileURLToPath(
     import.meta.url);
 
-// 👇️ "/home/john/Desktop/javascript"
 const __dirname = path.dirname(__filename);
 
-Amplify.configure({...awsExports, ssr: true });
+Amplify.configure({...awsExports });
+Auth.configure({...awsExports });
 
 
 let app = express();

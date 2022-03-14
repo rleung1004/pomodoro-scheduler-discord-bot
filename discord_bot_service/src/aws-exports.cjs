@@ -27,4 +27,4 @@ const awsmobile = {
 };
 
 
-module.exports = {default: awsmobile};
+module.exports = { default: awsmobile };

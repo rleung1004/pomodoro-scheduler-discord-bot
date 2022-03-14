@@ -2,6 +2,8 @@ import { Auth } from 'aws-amplify';
 import express from 'express';
 var router = express.Router();
 
+const BASE_ROUTE = "/4537/API/V1"
+
 router.post('/signup', function(req, res) {
     let username = req.body.username;
     let password = req.body.password;
@@ -18,16 +20,24 @@ router.post('/signup', function(req, res) {
 });
 
 
-router.post('/signin', function(req, res) {
+router.post('/signin', function(req, res, next) {
     let username = req.body.username;
     let password = req.body.password;
 
-    Auth.signIn(username, password)
-        .then(user => {
-            console.log(user);
+    Auth.currentAuthenticatedUser()
+        .then(() => {
+            res.redirect(307, `/admin`);
+            next();
         }).catch(err => {
-            console.log(err);
+            Auth.signIn(username, password)
+                .then(user => {
+                    console.log(user);
+                    res.redirect(`${BASE_ROUTE}/admin`);
+                }).catch(err => {
+                    console.log(err);
+                });
         });
+
 })
 
 router.post('/signout', function(req, res) {
