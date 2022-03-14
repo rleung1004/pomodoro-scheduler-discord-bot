@@ -1,11 +1,9 @@
-import { Amplify } from "aws-amplify";
-import awsExports from "../src/aws-exports";
-
-Amplify.configure({...awsExports, ssr: true });
+const endpoint = "http://localhost:3000/4537/API/V1/";
+let loggedIn = false;
 
 $('document').ready(function() {
 
-    $('#loginButton, #signupButton').click(function() {
+    $('#loginButton').click(function() {
 
         setTimeout(function() {
 
@@ -21,7 +19,34 @@ $('document').ready(function() {
         }, {
             duration: 500,
             complete: function() {
-                alert("Tada! That's where you handle this event (login/signup/whatever...), ie. redirect to another page. Reload the page to go back to the main screen!")
+                let username = document.getElementById('username').value;
+                let password = document.getElementById('password').value;
+                signin(username, password);
+            }
+
+        })
+
+    })
+
+    $('#signupButton').click(function() {
+
+        setTimeout(function() {
+
+            $(".page-transition").velocity("fadeIn", {
+                queue: false
+            });
+
+        }, 100);
+
+        $('.page-transition').velocity({
+            scale: "10000%",
+            translateZ: 0
+        }, {
+            duration: 500,
+            complete: function() {
+                let username = document.getElementById('username').value;
+                let password = document.getElementById('password').value;
+                signup(username, password);
             }
 
         })
@@ -112,3 +137,45 @@ $('document').ready(function() {
     });
 
 });
+
+function signin(username, password) {
+    fetch(endpoint + "users/signin", {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'text/plain;charset=UTF-8',
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("error loggin in")
+            }
+            loggedIn = true;
+        })
+        .catch(err => { console.error(err) })
+}
+
+function signup(username, password) {
+    fetch(endpoint + "users/signup", {
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'text/plain;charset=UTF-8',
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("error loggin in")
+            }
+            loggedIn = true;
+        })
+        .catch(err => { console.log(err) });
+}

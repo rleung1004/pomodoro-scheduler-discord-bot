@@ -1,20 +1,20 @@
-let Amplify, { Auth } = require('aws-amplify');
-var express = require('express');
+import { Auth } from 'aws-amplify';
+import express from 'express';
 var router = express.Router();
 
 router.post('/signup', function(req, res) {
     let username = req.body.username;
     let password = req.body.password;
+    console.log(username, password);
 
-    try {
-        const { user } = Auth.signUp({
-            username,
-            password
-        });
+    Auth.signUp({
+        username,
+        password
+    }).then(user => {
         console.log(user);
-    } catch (error) {
-        res.send('error signing up: ' + error);
-    }
+    }).catch(err => {
+        console.log(err);
+    });
 });
 
 
@@ -22,20 +22,17 @@ router.post('/signin', function(req, res) {
     let username = req.body.username;
     let password = req.body.password;
 
-    try {
-        const user = Auth.signIn(username, password);
-        console.log(user);
-    } catch (error) {
-        res.send('error signing in: ' + error);
-    }
+    Auth.signIn(username, password)
+        .then(user => {
+            console.log(user);
+        }).catch(err => {
+            console.log(err);
+        });
 })
 
 router.post('/signout', function(req, res) {
-    try {
-        Auth.signOut();
-    } catch (error) {
-        res.send('error signing out: ' + error);
-    }
+    Auth.signOut()
+        .then(() => { console.log('signout succcess'); }).catch(err => { console.log(err); });
 })
 
-module.exports = router;
+export default router;
