@@ -6,7 +6,7 @@ var router = express.Router();
 
 router.post("/signup", function (req, res) {
   sql.query(
-    'UPDATE requests SET count = count + 1 WHERE route = "/users/signup";',
+    'UPDATE request SET count = count + 1 WHERE route = "/users/signup";',
     (err, res) => {
       if (err) {
         throw err;
@@ -31,7 +31,7 @@ router.post("/signup", function (req, res) {
 
 router.post("/signin", function (req, res, next) {
   sql.query(
-    'UPDATE requests SET count = count + 1 WHERE route = "/users/signin";',
+    'UPDATE request SET count = count + 1 WHERE route = "/users/signin";',
     (err, res) => {
       if (err) {
         throw err;
@@ -61,7 +61,7 @@ router.post("/signin", function (req, res, next) {
 
 router.post("/signout", function (req, res) {
   sql.query(
-    'UPDATE requests SET count = count + 1 WHERE route = "/users/signout";',
+    'UPDATE request SET count = count + 1 WHERE route = "/users/signout";',
     (err, res) => {
       if (err) {
         throw err;

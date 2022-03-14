@@ -12,7 +12,7 @@ const Commitment = function (commitment) {
 
 Commitment.create = (newCommitment, result) => {
   sql.query(
-    'UPDATE requests SET count = count + 1 WHERE route = "/commitments/create";',
+    'UPDATE request SET count = count + 1 WHERE route = "/commitments/create";',
     (err, res) => {
       if (err) {
         throw err;
@@ -36,7 +36,7 @@ Commitment.create = (newCommitment, result) => {
 
 Commitment.findById = (id, result) => {
   sql.query(
-    'UPDATE requests SET count = count + 1 WHERE route = "/commitments/findById";',
+    'UPDATE request SET count = count + 1 WHERE route = "/commitments/findById";',
     (err, res) => {
       if (err) {
         throw err;
@@ -66,7 +66,7 @@ Commitment.getAll = (title, result) => {
   }
 
   sql.query(
-    'UPDATE requests SET count = count + 1 WHERE route = "/commitments/getAll";',
+    'UPDATE request SET count = count + 1 WHERE route = "/commitments/getAll";',
     (err, res) => {
       if (err) {
         throw err;

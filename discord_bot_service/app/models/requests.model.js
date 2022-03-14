@@ -5,7 +5,7 @@ const Requests = function (request) {
 };
 
 Requests.getAll = (route, result) => {
-  let query = "SELECT * FROM requests";
+  let query = "SELECT * FROM request";
   if (route) {
     query += `WHERE route LIKE '%${route}'`;
   }
