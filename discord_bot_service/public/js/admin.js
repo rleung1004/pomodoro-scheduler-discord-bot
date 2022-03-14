@@ -152,9 +152,18 @@ function signin(username, password) {
         })
         .then(res => {
             if (!res.ok) {
-                throw new Error("error loggin in")
+                throw new Error("Could not sign in");
             }
-            loggedIn = true;
+            return res.json();
+        })
+        .then(res => {
+            const myNode = document.getElementById("body");
+            myNode.innerHTML = JSON.stringify(res);;
+            for (let keys in res) {
+                const div = document.createElement("div");
+                div.innerText = res[keys].title;
+                document.body.appendChild(div);
+            }
         })
         .catch(err => { console.error(err) })
 }
@@ -175,7 +184,6 @@ function signup(username, password) {
             if (!res.ok) {
                 throw new Error("error loggin in")
             }
-            loggedIn = true;
         })
         .catch(err => { console.log(err) });
 }
