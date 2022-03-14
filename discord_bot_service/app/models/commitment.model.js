@@ -1,14 +1,18 @@
 import sql from "./db.js";
 
 const Commitment = function(commitment) {
-    this.title = commitment.title,
-        this.date = commitment.date,
-        this.info = commitment.info
+    this.location = commitment.location,
+    this.name = commitment.name,
+    this.notes = commitment.notes
+    this.repeated = commitment.repeated,
+    this.url = commitment.url,
+    this.startTime = commitment.endTime,
+    this.endTime = commitment.endTime
 };
 
 Commitment.create = (newCommitment, result) => {
 
-    sql.query('UPDATE requests SET count = count + 1 WHERE route = "commitment/create";', (err, res) => {
+    sql.query('UPDATE requests SET count = count + 1 WHERE route = "/commitments/create";', (err, res) => {
         if (err) {
             throw err;
         }
@@ -30,7 +34,7 @@ Commitment.create = (newCommitment, result) => {
 
 Commitment.findById = (id, result) => {
 
-    sql.query('UPDATE requests SET count = count + 1 WHERE route = "commitment/findById";', (err, res) => {
+    sql.query('UPDATE requests SET count = count + 1 WHERE route = "/commitments/findById";', (err, res) => {
         if (err) {
             throw err;
         }
@@ -57,7 +61,7 @@ Commitment.getAll = (title, result) => {
         query += `WHERE title LIKE '%${title}'`;
     }
 
-    sql.query('UPDATE requests SET count = count + 1 WHERE route = "commitment/getAll";', (err, res) => {
+    sql.query('UPDATE requests SET count = count + 1 WHERE route = "/commitments/getAll";', (err, res) => {
         if (err) {
             throw err;
         }
