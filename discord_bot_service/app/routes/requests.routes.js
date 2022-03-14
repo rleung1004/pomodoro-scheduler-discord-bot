@@ -1,5 +1,6 @@
-import requests from "../controllers/requests.controller.js";
+import getAll from "../controllers/requests.controller.js";
 import express from "express";
+
 var router = express.Router();
 
 router.get("/", function (req, res) {
