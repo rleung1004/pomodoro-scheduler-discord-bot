@@ -9,7 +9,7 @@ import commitmentRoutes from "./app/routes/commitments.routes.js";
 import requestRoutes from "./app/routes/requests.routes.js";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
-import swaggerDocument from "./resources/discord_bot_service.json";
+import * as swaggerDocument from "./resources/discord_bot_service.json";
 
 const __filename = fileURLToPath(import.meta.url);
 
