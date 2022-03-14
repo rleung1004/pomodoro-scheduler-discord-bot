@@ -1,4 +1,6 @@
 import express from 'express';
+import sql from "./db.js";
+
 import path from "path";
 import { fileURLToPath } from 'url';
 var router = express.Router();
@@ -11,6 +13,12 @@ const __filename = fileURLToPath(
 const __dirname = path.dirname(__filename);
 
 router.get('/', function(req, res) {
+    sql.query('UPDATE requests SET count = count + 1 WHERE route = "/admin";', (err, res) => {
+        if (err) {
+            throw err;
+        }
+    })
+
     res.sendFile(path.resolve(__dirname + '../../../public/admin.html'));
 })
 
