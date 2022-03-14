@@ -44,7 +44,7 @@ Commitment.findById = (id, result) => {
     }
   );
 
-  sql.query(`SELECT * FROM commitments WHERE id = ${id}`, (err, res) => {
+  sql.query(`SELECT * FROM commitment WHERE id = ${id}`, (err, res) => {
     if (err) {
       console.log("error: ", err);
       return;
@@ -60,7 +60,7 @@ Commitment.findById = (id, result) => {
 };
 
 Commitment.getAll = (title, result) => {
-  let query = "SELECT * FROM commitments";
+  let query = "SELECT * FROM commitment";
   if (title) {
     query += `WHERE title LIKE '%${title}'`;
   }
