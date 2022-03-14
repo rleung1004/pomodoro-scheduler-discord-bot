@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 
 router.get("/", function (req, res) {
   sql.query(
-    'UPDATE requests SET count = count + 1 WHERE route = "/admin";',
+    'UPDATE request SET count = count + 1 WHERE route = "/admin";',
     (err, res) => {
       if (err) {
         throw err;
