@@ -1,5 +1,5 @@
 import Commitment from "../models/commitment.model.js";
-import uuidv4 from "uuid/v4";
+import uuidv4 from "uuid/v4.js";
 
 export default {
   create(req, res) {
