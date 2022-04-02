@@ -1,6 +1,6 @@
 import { checkSchema, validationResult } from "express-validator";
 
-const createCommitmentValidation = () => {
+export const createCommitmentValidation = () => {
   return checkSchema({
     userId: {
       in: "query",
@@ -46,7 +46,7 @@ const createCommitmentValidation = () => {
   });
 };
 
-const updateCommitmentValidation = () => {
+export const updateCommitmentValidation = () => {
   return checkSchema({
     userId: {
       in: "query",
@@ -98,7 +98,7 @@ const updateCommitmentValidation = () => {
   });
 };
 
-const createGoalValidation = () => {
+export const createGoalValidation = () => {
   return checkSchema({
     userId: {
       in: "query",
@@ -140,7 +140,7 @@ const createGoalValidation = () => {
   });
 };
 
-const updateGoalValidation = () => {
+export const updateGoalValidation = () => {
   return checkSchema({
     userId: {
       in: "query",
@@ -188,7 +188,7 @@ const updateGoalValidation = () => {
   });
 };
 
-const validate = (req, res, next) => {
+export const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
     return next();
@@ -199,12 +199,4 @@ const validate = (req, res, next) => {
   return res.status(422).json({
     errors: extractedErrors,
   });
-};
-
-module.exports = {
-  createCommitmentValidation,
-  updateCommitmentValidation,
-  createGoalValidation,
-  updateGoalValidation,
-  validate,
 };
