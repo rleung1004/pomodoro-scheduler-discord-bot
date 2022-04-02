@@ -43,7 +43,7 @@
   ],
   "schemes": ["https"],
   "paths": {
-    "/commitment": {
+    "/commitment/{userId}": {
       "put": {
         "tags": ["commitment"],
         "summary": "Add a commitment to the user's schedule",
@@ -52,6 +52,14 @@
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user",
+            "required": true,
+            "type": "string",
+            "format": "uuidv4"
+          },
           {
             "in": "body",
             "name": "body",
@@ -72,7 +80,9 @@
             "scheduler_auth": ["write:schedules", "read:schedules"]
           }
         ]
-      },
+      }
+    },
+    "/commitment/{userId}/{commitmentId}": {
       "patch": {
         "tags": ["commitment"],
         "summary": "Update an existing commitment to a user's schedule",
@@ -81,6 +91,22 @@
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user",
+            "required": true,
+            "type": "string",
+            "format": "uuidv4"
+          },
+          {
+            "name": "commitmentId",
+            "in": "path",
+            "description": "ID of commitment to update",
+            "required": true,
+            "type": "string",
+            "format": "uuidv4"
+          },
           {
             "in": "body",
             "name": "body",
@@ -107,9 +133,7 @@
             "scheduler_auth": ["write:schedules", "read:schedules"]
           }
         ]
-      }
-    },
-    "/commitment/{commitmentId}": {
+      },
       "delete": {
         "tags": ["commitment"],
         "summary": "Delete an existing commitment to a user's schedule",
@@ -118,6 +142,14 @@
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user",
+            "required": true,
+            "type": "string",
+            "format": "uuidv4"
+          },
           {
             "name": "commitmentId",
             "in": "path",
@@ -166,7 +198,9 @@
             "scheduler_auth": ["write:schedules", "read:schedules"]
           }
         ]
-      },
+      }
+    },
+    "/goal/{userId}/{goalId}": {
       "patch": {
         "tags": ["goal"],
         "summary": "Update an existing goal to a user's schedule",
@@ -175,6 +209,22 @@
         "consumes": ["application/json"],
         "produces": ["application/json"],
         "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user",
+            "required": true,
+            "type": "string",
+            "format": "uuidv4"
+          },
+          {
+            "name": "goalId",
+            "in": "path",
+            "description": "ID of Goal to update",
+            "required": true,
+            "type": "string",
+            "format": "uuidv4"
+          },
           {
             "in": "body",
             "name": "body",
@@ -201,9 +251,7 @@
             "scheduler_auth": ["write:schedules", "read:schedules"]
           }
         ]
-      }
-    },
-    "/goal/{goalId}": {
+      },
       "delete": {
         "tags": ["goal"],
         "summary": "Delete an existing goal to a user's schedule",
@@ -213,9 +261,17 @@
         "produces": ["application/json"],
         "parameters": [
           {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user",
+            "required": true,
+            "type": "string",
+            "format": "uuidv4"
+          },
+          {
             "name": "goalId",
             "in": "path",
-            "description": "ID of goal to delete",
+            "description": "ID of Goal to delete",
             "required": true,
             "type": "string",
             "format": "uuidv4"
@@ -232,25 +288,10 @@
       }
     }
   },
-  "securityDefinitions": {
-    "scheduler_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:schedules": "modify schedule in your account",
-        "read:schedules": "read your schedule"
-      }
-    }
-  },
   "definitions": {
     "Commitment": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "uuidv4"
-        },
         "location": {
           "type": "string",
           "description": "Location of commitment"
@@ -263,20 +304,11 @@
           "type": "string",
           "format": "Notes about the commitment from the user"
         },
-        "repeat": {
-          "type": "string",
-          "description": "Repeat type of commitment",
-          "enum": [
-            "NEVER",
-            "DAILY",
-            "MON",
-            "TUES",
-            "WED",
-            "THURS",
-            "FRI",
-            "SAT",
-            "SUN"
-          ]
+        "repeats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RepeatType"
+          }
         },
         "url": {
           "type": "string",
@@ -295,10 +327,6 @@
     "Goal": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "format": "uuidv4"
-        },
         "location": {
           "type": "string",
           "description": "Location of goal"
@@ -316,9 +344,9 @@
           "description": "URL of goal"
         },
         "priority": {
-          "type": "string",
-          "description": "Priority of goal",
-          "enum": ["LOW", "MEDIUM", "HIGH"]
+          "type": "integer",
+          "format": "int64",
+          "description": "Priority of goal, the lower the value the higher the priority"
         },
         "totalTimeInMinutes": {
           "type": "integer",
@@ -329,10 +357,11 @@
           "format": "date-time"
         }
       }
+    },
+    "RepeatType": {
+      "type": "string",
+      "description": "Repeat type of commitment",
+      "enum": ["MON", "TUES", "WED", "THURS", "FRI", "SAT", "SUN"]
     }
-  },
-  "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
   }
 }

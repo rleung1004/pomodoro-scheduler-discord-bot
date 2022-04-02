@@ -52,4 +52,6 @@ app.get(BASE_ROUTE, function (req, res) {
   res.sendFile(__dirname + "/public/admin.html");
 });
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log(`App listening on port ${PORT}`);
+});

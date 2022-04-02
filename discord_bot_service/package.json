@@ -1,29 +1,30 @@
 {
-    "name": "termproject2",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "start": "node index.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Ishika18/pomodoro-scheduler-discord-bot.git"
-    },
-    "type": "module",
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/Ishika18/pomodoro-scheduler-discord-bot/issues"
-    },
-    "homepage": "https://github.com/Ishika18/pomodoro-scheduler-discord-bot#readme",
-    "dependencies": {
-        "aws-amplify": "^4.3.16",
-        "cors": "^2.8.5",
-        "express": "^4.17.3",
-        "mysql": "^2.18.1",
-        "swagger-ui-express": "^4.3.0"
-    }
+  "name": "termproject2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ishika18/pomodoro-scheduler-discord-bot.git"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ishika18/pomodoro-scheduler-discord-bot/issues"
+  },
+  "homepage": "https://github.com/Ishika18/pomodoro-scheduler-discord-bot#readme",
+  "dependencies": {
+    "aws-amplify": "^4.3.16",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "express-validator": "^6.14.0",
+    "mysql": "^2.18.1",
+    "swagger-ui-express": "^4.3.0"
+  }
 }

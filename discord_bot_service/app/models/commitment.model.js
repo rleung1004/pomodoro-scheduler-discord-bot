@@ -1,18 +1,21 @@
 import sql from "./db.js";
 
 const Commitment = function (commitment) {
-  (this.location = commitment.location),
+  (this.id = commitment.id),
+    (this.userId = commitment.userId),
+    (this.location = commitment.location),
     (this.name = commitment.name),
-    (this.notes = commitment.notes);
-  (this.repeated = commitment.repeated),
+    (this.notes = commitment.notes),
+    (this.minutes = commitment.minutes),
+    (this.repeats = commitment.repeats),
     (this.url = commitment.url),
-    (this.startTime = commitment.endTime),
+    (this.startTime = commitment.startTime),
     (this.endTime = commitment.endTime);
 };
 
 Commitment.create = (newCommitment, result) => {
   sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "/commitments/create";',
+    'UPDATE request SET count = count + 1 WHERE route = "PUT /commitments";',
     (err, res) => {
       if (err) {
         throw err;
@@ -20,72 +23,76 @@ Commitment.create = (newCommitment, result) => {
     }
   );
 
-  sql.query("INSERT INTO commitment SET ?", newCommitment, (err, res) => {
+  sql.query(
+    "INSERT INTO commitment VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    [
+      newCommitment.id,
+      newCommitment.userId,
+      newCommitment.location,
+      newCommitment.name,
+      newCommitment.notes,
+      newCommitment.minutes,
+      newCommitment.repeats,
+      newCommitment.url,
+      newCommitment.startTime,
+      newCommitment.endTime,
+    ],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+      console.log("created commitment: ", res);
+      result(null, res);
+    }
+  );
+};
+
+Commitment.update = (commitment, result) => {
+  sql.query(
+    'UPDATE request SET count = count + 1 WHERE route = "PATCH /commitments";',
+    (err, res) => {
+      if (err) {
+        throw err;
+      }
+    }
+  );
+
+  sql.query(
+    "UPDATE commitment SET location = ?, name = ?, notes = ?, minutes = ?, repeats = ?, url = ?, startTime = ?, endTime = ? WHERE id = ?",
+    [
+      commitment.location,
+      commitment.name,
+      commitment.notes,
+      commitment.minutes,
+      commitment.repeats,
+      commitment.url,
+      commitment.startTime,
+      commitment.endTime,
+      commitment.id,
+    ],
+    (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+      console.log("created commitment: ", res);
+      result(null, res);
+    }
+  );
+};
+
+Commitment.getById = (id, result) => {
+  sql.query("SELECT * FROM commitment WHERE id = ?", id, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     }
-    console.log("created commitment: ", {
-      id: res.insertId,
-      ...newCommitment,
-    });
-    result(null, { id: res.insertId, ...newCommitment });
-  });
-};
-
-Commitment.findById = (id, result) => {
-  sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "/commitments/findById";',
-    (err, res) => {
-      if (err) {
-        throw err;
-      }
-    }
-  );
-
-  sql.query(`SELECT * FROM commitment WHERE id = ${id}`, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      return;
-    }
-    if (res.length) {
-      console.log("found commitment: ", res[0]);
-      result(null, res[0]);
-      return;
-    }
-    // else not found:
-    result({ kind: "not_found" }, null);
-  });
-};
-
-Commitment.getAll = (title, result) => {
-  let query = "SELECT * FROM commitment";
-  if (title) {
-    query += `WHERE title LIKE '%${title}'`;
-  }
-
-  sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "/commitments/getAll";',
-    (err, res) => {
-      if (err) {
-        throw err;
-      }
-    }
-  );
-
-  sql.query(query, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      return;
-    }
-    if (res.length) {
-      console.log("found commitment: ", res[0]);
-      result(null, res[0]);
-      return;
-    }
-    // else not found:
-    result({ kind: "not_found" }, null);
+    console.log("updated commitment ", res);
+    result(null, res);
   });
 };
 
