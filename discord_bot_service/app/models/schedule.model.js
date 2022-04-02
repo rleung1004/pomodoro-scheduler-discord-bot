@@ -1,10 +1,8 @@
 import sql from "./db.js";
 
 const Schedule = function (schedule) {
-  (this.userId = schedule.userId),
-  (this.scheduleObj = schedule.scheduleObj)
+  (this.userId = schedule.userId), (this.scheduleObj = schedule.scheduleObj);
 };
-
 
 Schedule.getUserSchedule = (userId, result) => {
   sql.query(
@@ -16,7 +14,7 @@ Schedule.getUserSchedule = (userId, result) => {
     }
   );
 
-  sql.query(`SELECT * FROM schedule WHERE userId = ${userId}`, (err, res) => {
+  sql.query(`SELECT * FROM schedule WHERE userId = ?`, userId, (err, res) => {
     if (err) {
       console.log("error: ", err);
       return;
