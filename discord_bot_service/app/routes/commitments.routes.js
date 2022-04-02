@@ -4,7 +4,7 @@ import {
   createCommitmentValidation,
   updateCommitmentValidation,
   validate,
-} from "../utils/validators";
+} from "../utils/validators.js";
 import commitments from "../controllers/commitments.controller.js";
 
 router.put(
