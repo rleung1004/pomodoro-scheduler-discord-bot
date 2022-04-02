@@ -316,9 +316,9 @@
           "description": "URL of goal"
         },
         "priority": {
-          "type": "string",
-          "description": "Priority of goal",
-          "enum": ["LOW", "MEDIUM", "HIGH"]
+          "type": "integer",
+          "format": "int64",
+          "description": "Priority of goal, the lower the value the higher the priority"
         },
         "totalTimeInMinutes": {
           "type": "integer",
