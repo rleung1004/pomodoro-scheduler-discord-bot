@@ -6,6 +6,7 @@ const Commitment = function (commitment) {
     (this.location = commitment.location),
     (this.name = commitment.name),
     (this.notes = commitment.notes),
+    (this.minutes = commitment.minutes),
     (this.repeats = commitment.repeats),
     (this.url = commitment.url),
     (this.startTime = commitment.startTime),
@@ -23,13 +24,14 @@ Commitment.create = (newCommitment, result) => {
   );
 
   sql.query(
-    "INSERT INTO commitment VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO commitment VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       newCommitment.id,
       newCommitment.userId,
       newCommitment.location,
       newCommitment.name,
       newCommitment.notes,
+      newCommitment.minutes,
       newCommitment.repeats,
       newCommitment.url,
       newCommitment.startTime,
@@ -58,11 +60,12 @@ Commitment.update = (commitment, result) => {
   );
 
   sql.query(
-    "UPDATE commitment SET location = ?, name = ?, notes = ?, repeats = ?, url = ?, startTime = ?, endTime = ? WHERE id = ?",
+    "UPDATE commitment SET location = ?, name = ?, notes = ?, minutes = ?, repeats = ?, url = ?, startTime = ?, endTime = ? WHERE id = ?",
     [
       commitment.location,
       commitment.name,
       commitment.notes,
+      commitment.minutes,
       commitment.repeats,
       commitment.url,
       commitment.startTime,

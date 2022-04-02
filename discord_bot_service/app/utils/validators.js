@@ -20,6 +20,10 @@ export const createCommitmentValidation = () => {
       in: "body",
       errorMessage: "Notes is not provided",
     },
+    minutes: {
+      in: "body",
+      errorMessage: "Minutes is not provided",
+    },
     repeats: {
       in: "body",
       errorMessage: "Repeats must be provided",
@@ -72,6 +76,10 @@ export const updateCommitmentValidation = () => {
       in: "body",
       errorMessage: "Notes is not provided",
     },
+    minutes: {
+      in: "body",
+      errorMessage: "Minutes is not provided",
+    },
     repeats: {
       in: "body",
       errorMessage: "Repeats must be provided",
@@ -117,6 +125,10 @@ export const createGoalValidation = () => {
     notes: {
       in: "body",
       errorMessage: "Notes is not provided",
+    },
+    minutes: {
+      in: "body",
+      errorMessage: "Minutes is not provided",
     },
     url: {
       in: "body",
