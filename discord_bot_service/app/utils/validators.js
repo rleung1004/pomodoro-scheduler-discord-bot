@@ -140,48 +140,6 @@ const createGoalValidation = () => {
   });
 };
 
-const createGoalValidation = () => {
-  return checkSchema({
-    userId: {
-      in: "query",
-      errorMessage: "User ID is not valid UUID",
-      isString: true,
-      isUUID: true,
-    },
-    location: {
-      in: "body",
-      errorMessage: "Location is not provided",
-    },
-    name: {
-      in: "body",
-      errorMessage: "Name is not provided",
-    },
-    notes: {
-      in: "body",
-      errorMessage: "Notes is not provided",
-    },
-    url: {
-      in: "body",
-      errorMessage: "URL is not provided",
-    },
-    priority: {
-      in: "body",
-      errorMessage: "Priority integer must be provided",
-      isInt: true,
-    },
-    totalTimeInMinutes: {
-      in: "body",
-      errorMessage: "Total time of the goal as an integer must be provided",
-      isInt: true,
-    },
-    deadline: {
-      in: "body",
-      errorMessage: "Deadline date of goal must be provided",
-      isDate: true,
-    },
-  });
-};
-
 const updateGoalValidation = () => {
   return checkSchema({
     userId: {
