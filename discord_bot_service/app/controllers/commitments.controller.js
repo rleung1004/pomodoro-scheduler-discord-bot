@@ -5,15 +5,17 @@ export default {
   create(req, res) {
     const commitment = new Commitment({
       id: uuidv4(),
-      userId: req.query.userId,
+      userId: req.params.userId,
       location: req.body.location,
       name: req.body.name,
       notes: req.body.notes,
       repeats: req.body.repeats,
       url: req.body.url,
-      startTime: commitment.startTime,
-      endTime: commitment.endTime,
+      startTime: req.body.startTime,
+      endDate: req.body.endDate,
+      minutes: req.body.minutes,
     });
+    console.log(commitment);
     Commitment.create(commitment, (err, data) => {
       if (err) {
         res.status(500).send({
@@ -29,34 +31,18 @@ export default {
   },
   update(req, res) {
     const commitment = new Commitment({
-      id: req.query.commitmentId,
-      userId: req.query.userId,
+      id: req.params.commitmentId,
+      userId: req.params.userId,
       location: req.body.location,
       name: req.body.name,
       notes: req.body.notes,
       repeats: req.body.repeats,
       url: req.body.url,
-      startTime: commitment.startTime,
-      endTime: commitment.endTime,
+      startTime: req.body.startTime,
+      endDate: req.body.endDate,
+      minutes: req.body.minutes,
     });
-    let existingCommitment;
-    Commitment.getById(commitment.id, (err, data) => {
-      if (data) {
-        existingCommitment = data;
-      }
-    });
-    if (!existingCommitment) {
-      res.status(404).send({
-        message: `Commitment ${commitment.id} not found`,
-      });
-      return;
-    }
-    if (existingCommitment.userId !== commitment.userId) {
-      res.status(403).send({
-        message: `Access to commitment ${commitment.id} is forbidden`,
-      });
-      return;
-    }
+
     Commitment.update(commitment, (err, data) => {
       if (err) {
         res.status(500).send({
@@ -64,7 +50,13 @@ export default {
             err.message || "An error occurred while creating the commitment.",
         });
       } else {
-        res.status(204);
+        if (!data) {
+          res.status(404).send({
+            message: `Commitment ID ${commitment.id} not found`,
+          });
+        } else {
+          res.status(204).send();
+        }
       }
     });
   },

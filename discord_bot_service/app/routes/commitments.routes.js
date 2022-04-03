@@ -1,5 +1,6 @@
 import express from "express";
 var router = express.Router();
+import { body, param } from "express-validator";
 import {
   createCommitmentValidation,
   updateCommitmentValidation,

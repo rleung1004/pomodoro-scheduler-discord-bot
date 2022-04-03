@@ -318,9 +318,13 @@
           "type": "string",
           "format": "date-time"
         },
-        "endTime": {
+        "endDate": {
           "type": "string",
           "format": "date-time"
+        },
+        "minutes": {
+          "type": "integer",
+          "format": "int64"
         }
       }
     },
