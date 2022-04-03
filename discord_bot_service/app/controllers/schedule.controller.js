@@ -1,8 +1,8 @@
 import Schedule from "../models/schedule.model.js";
 
 export default {
-    getUserSchedule(req, res) {
-    const userId = req.query.userId;
+  getUserSchedule(req, res) {
+    const userId = req.params.userId;
     Schedule.getUserSchedule(userId, (err, data) => {
       if (err) {
         res.status(500).send({
@@ -13,5 +13,5 @@ export default {
         res.send(data);
       }
     });
-  }
+  },
 };
