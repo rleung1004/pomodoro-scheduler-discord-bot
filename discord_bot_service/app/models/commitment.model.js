@@ -129,6 +129,18 @@ Commitment.delete = (commitmentId, result) => {
   });
 };
 
+Commitment.getAllUserCommitments = (userId, result) => {
+  sql.query(`SELECT * FROM commitment WHERE userId = ?`, userId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    console.log("Found commitments ", res);
+    result(null, res);
+  });
+};
+
 Commitment.getById = (id, result) => {
   sql.query("SELECT * FROM commitment WHERE id = ?", id, (err, res) => {
     if (err) {

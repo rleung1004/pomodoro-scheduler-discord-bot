@@ -12,7 +12,7 @@ const MIN_DAY = 0;
 const MAX_DAY = 6;
 
 export default {
-  createUserConfig(req, res) {
+  createUserConfig(req, res, next) {
     const userId = req.params.userId;
     const userConfig = new UserConfig({
       userId,
@@ -54,7 +54,7 @@ export default {
       message: `User configs for ${userId} has been created successfully`,
     });
   },
-  updateUserConfig(req, res) {
+  updateUserConfig(req, res, next) {
     const userId = req.params.userId;
     const dayOfWeek = req.params.dayOfWeek;
 
@@ -125,6 +125,7 @@ export default {
           return;
         }
         res.status(204).send();
+        next();
       }
     });
   },

@@ -2,7 +2,29 @@ import Goal from "../models/goals.model.js";
 import uuidv4 from "uuid/v4.js";
 
 export default {
-  create(req, res) {
+  getAllByUser(req, res, next) {
+    const userId = req.params.userId;
+    Goal.getAllUserGoals(userId, (err, data) => {
+      if (err) {
+        res.status(500).send({
+          message: err.message || "An error occurred while getting goals.",
+        });
+        return;
+      }
+      if (data.length === 0) {
+        res.status(404).send({
+          message: `No goals found under user ${userId}`,
+        });
+      } else {
+        res.status(200).send({
+          message: `Goals found under user ${userId}`,
+          goals: data,
+        });
+        next();
+      }
+    });
+  },
+  create(req, res, next) {
     const goal = new Goal({
       id: uuidv4(),
       userId: req.params.userId,
@@ -32,10 +54,11 @@ export default {
         res.status(201).send({
           message: `goal ${goal.id} has been successfully created.`,
         });
+        next();
       }
     });
   },
-  update(req, res) {
+  update(req, res, next) {
     const goal = new Goal({
       id: req.params.goalId,
       userId: req.params.userId,
@@ -70,11 +93,12 @@ export default {
           });
         } else {
           res.status(204).send();
+          next();
         }
       }
     });
   },
-  delete(req, res) {
+  delete(req, res, next) {
     const goalId = req.params.goalId;
     Goal.delete(goalId, (err, data) => {
       if (err) {
@@ -88,6 +112,7 @@ export default {
           });
         } else {
           res.status(204).send();
+          next();
         }
       }
     });

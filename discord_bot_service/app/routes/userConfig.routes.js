@@ -7,6 +7,7 @@ import {
 } from "../utils/validators.js";
 import userConfig from "../controllers/userConfigs.controller.js";
 import { checkForExistingUserConfig } from "../utils/checkForExistingUserConfig.js";
+import { updateSchedule } from "../utils/updateSchedule.js";
 
 router.put(
   "/:userId",
@@ -19,7 +20,8 @@ router.patch(
   "/:userId/:dayOfWeek",
   updateUserConfigValidation,
   validate,
-  userConfig.updateUserConfig
+  userConfig.updateUserConfig,
+  updateSchedule
 );
 
 export default router;
