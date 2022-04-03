@@ -9,6 +9,7 @@ export default {
       location: req.body.location,
       name: req.body.name,
       notes: req.body.notes,
+      minutes: req.body.minutes,
       repeats: req.body.repeats,
       url: req.body.url,
       startTime: req.body.startTime,
