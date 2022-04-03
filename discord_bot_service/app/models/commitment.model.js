@@ -38,15 +38,16 @@ Commitment.create = (newCommitment, result) => {
   );
 
   sql.query(
-    "INSERT INTO commitment VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO commitment(id, userId, location, notes, url, name, repeats, startTime, endDate, minutes)" +
+      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       newCommitment.id,
       newCommitment.userId,
       newCommitment.location,
-      newCommitment.name,
       newCommitment.notes,
-      convertRepeatEnumArray(newCommitment.repeats),
       newCommitment.url,
+      newCommitment.name,
+      convertRepeatEnumArray(newCommitment.repeats),
       newCommitment.startTime,
       newCommitment.endDate,
       newCommitment.minutes,
