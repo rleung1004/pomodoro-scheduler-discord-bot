@@ -1,5 +1,19 @@
 import sql from "./db.js";
 
+const RepeatEnum = {
+  MON: 0,
+  TUES: 1,
+  WED: 2,
+  THURS: 3,
+  FRI: 4,
+  SAT: 5,
+  SUN: 6,
+};
+
+const convertRepeatEnumArray = (repeatEnumArray) => {
+  return `[${repeatEnumArray.map((e) => RepeatEnum[e])}]`;
+};
+
 const Commitment = function (commitment) {
   (this.id = commitment.id),
     (this.userId = commitment.userId),
@@ -10,7 +24,8 @@ const Commitment = function (commitment) {
     (this.repeats = commitment.repeats),
     (this.url = commitment.url),
     (this.startTime = commitment.startTime),
-    (this.endTime = commitment.endTime);
+    (this.endDate = commitment.endDate),
+    (this.minutes = commitment.minutes);
 };
 
 Commitment.create = (newCommitment, result) => {
@@ -31,11 +46,11 @@ Commitment.create = (newCommitment, result) => {
       newCommitment.location,
       newCommitment.name,
       newCommitment.notes,
-      newCommitment.minutes,
-      newCommitment.repeats,
+      convertRepeatEnumArray(newCommitment.repeats),
       newCommitment.url,
       newCommitment.startTime,
-      newCommitment.endTime,
+      newCommitment.endDate,
+      newCommitment.minutes,
     ],
     (err, res) => {
       if (err) {
@@ -60,16 +75,16 @@ Commitment.update = (commitment, result) => {
   );
 
   sql.query(
-    "UPDATE commitment SET location = ?, name = ?, notes = ?, minutes = ?, repeats = ?, url = ?, startTime = ?, endTime = ? WHERE id = ?",
+    "UPDATE commitment SET location = ?, name = ?, notes = ?, repeats = ?, url = ?, startTime = ?, endDate = ?, minutes = ? WHERE id = ?",
     [
       commitment.location,
       commitment.name,
       commitment.notes,
-      commitment.minutes,
-      commitment.repeats,
+      convertRepeatEnumArray(commitment.repeats),
       commitment.url,
       commitment.startTime,
-      commitment.endTime,
+      commitment.endDate,
+      commitment.minutes,
       commitment.id,
     ],
     (err, res) => {
@@ -78,7 +93,11 @@ Commitment.update = (commitment, result) => {
         result(err, null);
         return;
       }
-      console.log("created commitment: ", res);
+      console.log("updated commitment: ", res);
+      if (res.affectedRows === 0) {
+        result(null, null);
+        return;
+      }
       result(null, res);
     }
   );
@@ -91,7 +110,7 @@ Commitment.getById = (id, result) => {
       result(err, null);
       return;
     }
-    console.log("updated commitment ", res);
+    console.log("Found commitment ", res);
     result(null, res);
   });
 };
