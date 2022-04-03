@@ -2,6 +2,28 @@ import Goal from "../models/goals.model.js";
 import uuidv4 from "uuid/v4.js";
 
 export default {
+  getAllByUser(req, res, next) {
+    const userId = req.params.userId;
+    Goal.getAllUserGoals(userId, (err, data) => {
+      if (err) {
+        res.status(500).send({
+          message: err.message || "An error occurred while getting goals.",
+        });
+        return;
+      }
+      if (data.length === 0) {
+        res.status(404).send({
+          message: `No goals found under user ${userId}`,
+        });
+      } else {
+        res.status(200).send({
+          message: `Goals found under user ${userId}`,
+          goals: data,
+        });
+        next();
+      }
+    });
+  },
   create(req, res, next) {
     const goal = new Goal({
       id: uuidv4(),

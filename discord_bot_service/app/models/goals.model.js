@@ -117,6 +117,18 @@ Goal.delete = (goalId, result) => {
   });
 };
 
+Goal.getAllUserGoals = (userId, result) => {
+  sql.query(`SELECT * FROM goal WHERE userId = ?`, userId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    console.log("Found goals ", res);
+    result(null, res);
+  });
+};
+
 Goal.getById = (goalId, result) => {
   sql.query(`SELECT * FROM goal WHERE id = ?`, goalId, (err, res) => {
     if (err) {

@@ -2,6 +2,29 @@ import Commitment from "../models/commitment.model.js";
 import uuidv4 from "uuid/v4.js";
 
 export default {
+  getAllByUser(req, res, next) {
+    const userId = req.params.userId;
+    Commitment.getAllUserCommitments(userId, (err, data) => {
+      if (err) {
+        res.status(500).send({
+          message:
+            err.message || "An error occurred while getting commitments.",
+        });
+        return;
+      }
+      if (data.length === 0) {
+        res.status(404).send({
+          message: `No commitments found under user ${userId}`,
+        });
+      } else {
+        res.status(200).send({
+          message: `Commitments found under user ${userId}`,
+          commitments: data,
+        });
+        next();
+      }
+    });
+  },
   create(req, res, next) {
     const commitment = new Commitment({
       id: uuidv4(),

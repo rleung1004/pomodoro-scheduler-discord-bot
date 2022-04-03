@@ -1,6 +1,7 @@
 import express from "express";
 var router = express.Router();
 import {
+  getAllCommitmentsValidation,
   createCommitmentValidation,
   updateCommitmentValidation,
   deleteCommitmentValidation,
@@ -10,6 +11,13 @@ import { getUserConfig } from "../utils/getUserConfig.js";
 import commitments from "../controllers/commitments.controller.js";
 import { checkCommitmentOwnership } from "../utils/checkOwnership.js";
 import { updateSchedule } from "../utils/updateSchedule.js";
+
+router.get(
+  "/:userId",
+  getAllCommitmentsValidation,
+  validate,
+  commitments.getAllByUser
+);
 
 router.put(
   "/:userId",

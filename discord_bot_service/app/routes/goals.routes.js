@@ -1,6 +1,7 @@
 import express from "express";
 var router = express.Router();
 import {
+  getAllGoalsValidation,
   createGoalValidation,
   updateGoalValidation,
   deleteGoalValidation,
@@ -11,6 +12,7 @@ import goals from "../controllers/goals.controller.js";
 import { getUserConfig } from "../utils/getUserConfig.js";
 import { updateSchedule } from "../utils/updateSchedule.js";
 
+router.get("/:userId", getAllGoalsValidation, validate, goals.getAllByUser);
 router.put(
   "/:userId",
   createGoalValidation,
