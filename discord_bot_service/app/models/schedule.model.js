@@ -6,7 +6,7 @@ const Schedule = function (schedule) {
 
 Schedule.getUserSchedule = (userId, result) => {
   sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "/commitments/findByUserId";',
+    'UPDATE request SET count = count + 1 WHERE route = "GET /schedule/{userId}";',
     (err, res) => {
       if (err) {
         throw err;
@@ -25,7 +25,7 @@ Schedule.getUserSchedule = (userId, result) => {
       return;
     }
     // else not found:
-    result({ kind: "not_found" }, null);
+    result(null, null);
   });
 };
 

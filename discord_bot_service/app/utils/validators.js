@@ -5,53 +5,84 @@ const dateTimePattern =
   /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]$/;
 
 export const createCommitmentValidation = [
-  param("userId").exists().matches(userIdPattern),
-  body("location").exists(),
-  body("name").exists(),
-  body("notes").exists(),
+  param("userId").isString().matches(userIdPattern),
+  body("location").isString(),
+  body("name").isString(),
+  body("notes").isString(),
   body("repeats").isArray(),
   body("repeats.*").isIn(["MON", "TUES", "WED", "THURS", "FRI", "SAT", "SUN"]),
-  body("url").exists(),
+  body("url").isString(),
   body("startTime").matches(dateTimePattern),
   body("endDate").matches(dateTimePattern),
   body("minutes").isInt(),
 ];
 
 export const updateCommitmentValidation = [
-  param("userId").exists().matches(userIdPattern),
-  param("commitmentId").exists().isUUID(),
-  body("location").exists(),
-  body("name").exists(),
-  body("notes").exists(),
+  param("userId").isString().matches(userIdPattern),
+  param("commitmentId").isString().isUUID(),
+  body("location").isString(),
+  body("name").isString(),
+  body("notes").isString(),
   body("repeats").isArray(),
   body("repeats.*").isIn(["MON", "TUES", "WED", "THURS", "FRI", "SAT", "SUN"]),
-  body("url").exists(),
+  body("url").isString(),
   body("startTime").matches(dateTimePattern),
   body("endDate").matches(dateTimePattern),
   body("minutes").isInt(),
 ];
 
+export const deleteCommitmentValidation = [
+  param("userId").isString().matches(userIdPattern),
+  param("commitmentId").isString().isUUID(),
+];
+
 export const createGoalValidation = [
-  param("userId").exists().matches(userIdPattern),
-  body("location").exists(),
-  body("name").exists(),
-  body("notes").exists(),
-  body("url").exists(),
+  param("userId").isString().matches(userIdPattern),
+  body("location").isString(),
+  body("notes").isString(),
+  body("name").isString(),
+  body("totalTime").isInt(),
+  body("timeLeft").isInt(),
   body("priority").isInt(),
-  body("totalTimeInMinutes").isInt(),
-  body("deadline").isDate(),
+  body("endDate").isString().matches(dateTimePattern),
+  body("minTaskTime").isInt(),
+  body("ignoreDeadline").isBoolean(),
 ];
 
 export const updateGoalValidation = [
-  param("userId").exists().matches(userIdPattern),
-  param("goalId").exists().isUUID(),
-  body("location").exists(),
-  body("name").exists(),
-  body("notes").exists(),
-  body("url").exists(),
+  param("userId").isString().matches(userIdPattern),
+  param("goalId").isString().isUUID(),
+  body("location").isString(),
+  body("notes").isString(),
+  body("name").isString(),
+  body("totalTime").isInt(),
+  body("timeLeft").isInt(),
   body("priority").isInt(),
-  body("totalTimeInMinutes").isInt(),
-  body("deadline").matches(dateTimePattern),
+  body("endDate").isString().matches(dateTimePattern),
+  body("minTaskTime").isInt(),
+  body("ignoreDeadline").isBoolean(),
+];
+
+export const deleteGoalValidation = [
+  param("userId").isString().matches(userIdPattern),
+  param("goalId").isString().isUUID(),
+];
+
+export const createUserConfigValidation = [
+  param("userId").isString().matches(userIdPattern),
+  body("start").isInt(),
+  body("end").isInt(),
+];
+
+export const updateUserConfigValidation = [
+  param("userId").isString().matches(userIdPattern),
+  param("dayOfWeek").isInt(),
+  body("start").isInt(),
+  body("end").isInt(),
+  body("breaks").isArray(),
+  body("breaks.*").isInt(),
+  body("blockSize").isInt(),
+  body("interleaves").isInt(),
 ];
 
 export const validate = (req, res, next) => {

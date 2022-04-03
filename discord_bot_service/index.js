@@ -8,6 +8,8 @@ import adminRoutes from "./app/routes/admin.routes.js";
 import commitmentRoutes from "./app/routes/commitments.routes.js";
 import requestRoutes from "./app/routes/requests.routes.js";
 import scheduleRoutes from "./app/routes/schedule.routes.js";
+import goalRoutes from "./app/routes/goals.routes.js";
+import userConfigRoutes from "./app/routes/userConfig.routes.js";
 import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import { readFile } from "fs/promises";
@@ -44,10 +46,12 @@ app.use(
 app.use(express.static(path.join(__dirname, "/public")));
 
 app.use(`${BASE_ROUTE}/commitment`, commitmentRoutes);
+app.use(`${BASE_ROUTE}/goal`, goalRoutes);
 app.use(`${BASE_ROUTE}/requests`, requestRoutes);
 app.use(`${BASE_ROUTE}/users`, userRoutes);
 app.use(`${BASE_ROUTE}/admin`, adminRoutes);
 app.use(`${BASE_ROUTE}/schedule`, scheduleRoutes);
+app.use(`${BASE_ROUTE}/userConfig`, userConfigRoutes);
 app.get(BASE_ROUTE, function (req, res) {
   res.sendFile(__dirname + "/public/admin.html");
 });

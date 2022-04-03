@@ -48,12 +48,31 @@ export default {
       if (err) {
         res.status(500).send({
           message:
-            err.message || "An error occurred while creating the commitment.",
+            err.message || "An error occurred while updating the commitment.",
         });
       } else {
         if (!data) {
           res.status(404).send({
             message: `Commitment ID ${commitment.id} not found`,
+          });
+        } else {
+          res.status(204).send();
+        }
+      }
+    });
+  },
+  delete(req, res) {
+    const commitmentId = req.params.commitmentId;
+    Commitment.delete(commitmentId, (err, data) => {
+      if (err) {
+        res.status(500).send({
+          message:
+            err.message || "An error occurred while deleting the commitment.",
+        });
+      } else {
+        if (!data) {
+          res.status(404).send({
+            message: `Commitment ID ${goalId} not found`,
           });
         } else {
           res.status(204).send();

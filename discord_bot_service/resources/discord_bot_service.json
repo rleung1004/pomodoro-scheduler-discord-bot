@@ -71,15 +71,22 @@
           }
         ],
         "responses": {
-          "405": {
-            "description": "Invalid input"
+          "201": {
+            "description": "Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Commitment {commitmentId} has been successfully created."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity"
           }
-        },
-        "security": [
-          {
-            "scheduler_auth": ["write:schedules", "read:schedules"]
-          }
-        ]
+        }
       }
     },
     "/commitment/{userId}/{commitmentId}": {
@@ -118,14 +125,17 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "No content"
+          },
           "400": {
             "description": "Invalid ID supplied"
           },
           "404": {
             "description": "Commitment not found"
           },
-          "405": {
-            "description": "Validation exception"
+          "422": {
+            "description": "Unprocessable entity"
           }
         },
         "security": [
@@ -189,15 +199,22 @@
           }
         ],
         "responses": {
-          "405": {
-            "description": "Invalid input"
+          "201": {
+            "description": "Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Commitment {commitmentId} has been successfully created."
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity"
           }
-        },
-        "security": [
-          {
-            "scheduler_auth": ["write:schedules", "read:schedules"]
-          }
-        ]
+        }
       }
     },
     "/goal/{userId}/{goalId}": {
@@ -236,21 +253,19 @@
           }
         ],
         "responses": {
+          "204": {
+            "description": "No content"
+          },
           "400": {
             "description": "Invalid ID supplied"
           },
           "404": {
             "description": "Commitment not found"
           },
-          "405": {
-            "description": "Validation exception"
+          "422": {
+            "description": "Unprocessable entity"
           }
-        },
-        "security": [
-          {
-            "scheduler_auth": ["write:schedules", "read:schedules"]
-          }
-        ]
+        }
       },
       "delete": {
         "tags": ["goal"],
@@ -283,6 +298,49 @@
           },
           "404": {
             "description": "Commitment not found"
+          }
+        }
+      }
+    },
+    "/schedule/{userId}": {
+      "get": {
+        "tags": ["schedule"],
+        "summary": "Get all schedule work blocks of a user",
+        "description": "",
+        "operationId": "getSchedulesByUserId",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of user",
+            "required": true,
+            "type": "string",
+            "format": "uuidv4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "All schedule work blocks of user {userId}"
+                },
+                "schedule": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Schedule"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable entity"
           }
         }
       }
@@ -343,22 +401,71 @@
           "type": "string",
           "format": "Notes about the goal from the user"
         },
-        "url": {
-          "type": "string",
-          "description": "URL of goal"
+        "totalTime": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Total time required to complete goal"
+        },
+        "timeLeft": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Time left required to complete goal"
         },
         "priority": {
           "type": "integer",
           "format": "int64",
           "description": "Priority of goal, the lower the value the higher the priority"
         },
-        "totalTimeInMinutes": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "deadline": {
+        "endDate": {
           "type": "string",
-          "format": "date-time"
+          "format": "date"
+        },
+        "minTaskTime": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Minimum amount of time required to work on goal in each work block"
+        },
+        "ignoreDeadline": {
+          "type": "boolean",
+          "description": "A flag to ignore deadline or not"
+        }
+      }
+    },
+    "Schedule": {
+      "type": "object",
+      "description": "A schedule work block",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "description": "ID of schedule"
+        },
+        "userId": {
+          "type": "string",
+          "description": "ID of user who owns this schedule"
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "Date of the schedule work block"
+        },
+        "time": {
+          "type": "string",
+          "format": "time",
+          "description": "Time of the schedule work block"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of schedule work block"
+        },
+        "minutes": {
+          "type": "integer",
+          "format": "int64",
+          "description": "The duration of schedule work block in minutes"
+        },
+        "is_goal": {
+          "type": "boolean",
+          "description": "Is the schedule work block a goal or not"
         }
       }
     },

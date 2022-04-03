@@ -30,7 +30,7 @@ const Commitment = function (commitment) {
 
 Commitment.create = (newCommitment, result) => {
   sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "PUT /commitments";',
+    'UPDATE request SET count = count + 1 WHERE route = "PUT /commitment";',
     (err, res) => {
       if (err) {
         throw err;
@@ -39,15 +39,16 @@ Commitment.create = (newCommitment, result) => {
   );
 
   sql.query(
-    "INSERT INTO commitment VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO commitment(id, userId, location, notes, url, name, repeats, startTime, endDate, minutes)" +
+      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       newCommitment.id,
       newCommitment.userId,
       newCommitment.location,
-      newCommitment.name,
       newCommitment.notes,
-      convertRepeatEnumArray(newCommitment.repeats),
       newCommitment.url,
+      newCommitment.name,
+      convertRepeatEnumArray(newCommitment.repeats),
       newCommitment.startTime,
       newCommitment.endDate,
       newCommitment.minutes,
@@ -66,7 +67,7 @@ Commitment.create = (newCommitment, result) => {
 
 Commitment.update = (commitment, result) => {
   sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "PATCH /commitments";',
+    'UPDATE request SET count = count + 1 WHERE route = "PATCH /commitment";',
     (err, res) => {
       if (err) {
         throw err;
@@ -101,6 +102,31 @@ Commitment.update = (commitment, result) => {
       result(null, res);
     }
   );
+};
+
+Commitment.delete = (commitmentId, result) => {
+  sql.query(
+    'UPDATE request SET count = count + 1 WHERE route = "DELETE /commitment";',
+    (err, res) => {
+      if (err) {
+        throw err;
+      }
+    }
+  );
+
+  sql.query("DELETE FROM commitment WHERE id = ?", commitmentId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    console.log("deleted commitment: ", res);
+    if (res.affectedRows === 0) {
+      result(null, null);
+      return;
+    }
+    result(null, res);
+  });
 };
 
 Commitment.getById = (id, result) => {
