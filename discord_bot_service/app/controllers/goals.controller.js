@@ -61,12 +61,30 @@ export default {
     Goal.update(goal, (err, data) => {
       if (err) {
         res.status(500).send({
-          message: err.message || "An error occurred while creating the goal.",
+          message: err.message || "An error occurred while updating the goal.",
         });
       } else {
         if (!data) {
           res.status(404).send({
             message: `Goal ID ${goal.id} not found`,
+          });
+        } else {
+          res.status(204).send();
+        }
+      }
+    });
+  },
+  delete(req, res) {
+    const goalId = req.params.goalId;
+    Goal.delete(goalId, (err, data) => {
+      if (err) {
+        res.status(500).send({
+          message: err.message || "An error occurred while deleting the goal.",
+        });
+      } else {
+        if (!data) {
+          res.status(404).send({
+            message: `Goal ID ${goalId} not found`,
           });
         } else {
           res.status(204).send();

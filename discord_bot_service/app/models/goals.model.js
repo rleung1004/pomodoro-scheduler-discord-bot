@@ -16,7 +16,7 @@ const Goal = function (goal) {
 
 Goal.create = (newGoal, result) => {
   sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "PUT /goals";',
+    'UPDATE request SET count = count + 1 WHERE route = "PUT /goal";',
     (err, res) => {
       if (err) {
         throw err;
@@ -54,7 +54,7 @@ Goal.create = (newGoal, result) => {
 
 Goal.update = (goal, result) => {
   sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "PATCH /goals";',
+    'UPDATE request SET count = count + 1 WHERE route = "PATCH /goal";',
     (err, res) => {
       if (err) {
         throw err;
@@ -90,6 +90,43 @@ Goal.update = (goal, result) => {
       result(null, res);
     }
   );
+};
+
+Goal.delete = (goalId, result) => {
+  sql.query(
+    'UPDATE request SET count = count + 1 WHERE route = "DELETE /goal";',
+    (err, res) => {
+      if (err) {
+        throw err;
+      }
+    }
+  );
+
+  sql.query("DELETE FROM goal WHERE id = ?", goalId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    console.log("deleted goal: ", res);
+    if (res.affectedRows === 0) {
+      result(null, null);
+      return;
+    }
+    result(null, res);
+  });
+};
+
+Goal.getById = (goalId, result) => {
+  sql.query(`SELECT * FROM goal WHERE id = ?`, goalId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    console.log("Found commitment ", res);
+    result(null, res);
+  });
 };
 
 export default Goal;

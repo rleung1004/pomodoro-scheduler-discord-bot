@@ -30,7 +30,7 @@ const Commitment = function (commitment) {
 
 Commitment.create = (newCommitment, result) => {
   sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "PUT /commitments";',
+    'UPDATE request SET count = count + 1 WHERE route = "PUT /commitment";',
     (err, res) => {
       if (err) {
         throw err;
@@ -67,7 +67,7 @@ Commitment.create = (newCommitment, result) => {
 
 Commitment.update = (commitment, result) => {
   sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "PATCH /commitments";',
+    'UPDATE request SET count = count + 1 WHERE route = "PATCH /commitment";',
     (err, res) => {
       if (err) {
         throw err;
@@ -102,6 +102,31 @@ Commitment.update = (commitment, result) => {
       result(null, res);
     }
   );
+};
+
+Commitment.delete = (commitmentId, result) => {
+  sql.query(
+    'UPDATE request SET count = count + 1 WHERE route = "DELETE /commitment";',
+    (err, res) => {
+      if (err) {
+        throw err;
+      }
+    }
+  );
+
+  sql.query("DELETE FROM commitment WHERE id = ?", commitmentId, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+    console.log("deleted commitment: ", res);
+    if (res.affectedRows === 0) {
+      result(null, null);
+      return;
+    }
+    result(null, res);
+  });
 };
 
 Commitment.getById = (id, result) => {

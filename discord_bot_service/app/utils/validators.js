@@ -31,6 +31,11 @@ export const updateCommitmentValidation = [
   body("minutes").isInt(),
 ];
 
+export const deleteCommitmentValidation = [
+  param("userId").isString().matches(userIdPattern),
+  param("commitmentId").isString().isUUID(),
+];
+
 export const createGoalValidation = [
   param("userId").isString().matches(userIdPattern),
   body("location").isString(),
@@ -56,6 +61,11 @@ export const updateGoalValidation = [
   body("endDate").isString().matches(dateTimePattern),
   body("minTaskTime").isInt(),
   body("ignoreDeadline").isBoolean(),
+];
+
+export const deleteGoalValidation = [
+  param("userId").isString().matches(userIdPattern),
+  param("goalId").isString().isUUID(),
 ];
 
 export const createUserConfigValidation = [
