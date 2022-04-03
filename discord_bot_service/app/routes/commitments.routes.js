@@ -9,13 +9,15 @@ import {
 import { getUserConfig } from "../utils/getUserConfig.js";
 import commitments from "../controllers/commitments.controller.js";
 import { checkCommitmentOwnership } from "../utils/checkOwnership.js";
+import { updateSchedule } from "../utils/updateSchedule.js";
 
 router.put(
   "/:userId",
   createCommitmentValidation,
   validate,
   getUserConfig,
-  commitments.create
+  commitments.create,
+  updateSchedule
 );
 router.patch(
   "/:userId/:commitmentId",
@@ -23,14 +25,16 @@ router.patch(
   validate,
   getUserConfig,
   checkCommitmentOwnership,
-  commitments.update
+  commitments.update,
+  updateSchedule
 );
 router.delete(
   "/:userId/:commitmentId",
   deleteCommitmentValidation,
   validate,
   checkCommitmentOwnership,
-  commitments.delete
+  commitments.delete,
+  updateSchedule
 );
 
 export default router;

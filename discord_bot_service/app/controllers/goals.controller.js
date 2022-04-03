@@ -2,7 +2,7 @@ import Goal from "../models/goals.model.js";
 import uuidv4 from "uuid/v4.js";
 
 export default {
-  create(req, res) {
+  create(req, res, next) {
     const goal = new Goal({
       id: uuidv4(),
       userId: req.params.userId,
@@ -32,10 +32,11 @@ export default {
         res.status(201).send({
           message: `goal ${goal.id} has been successfully created.`,
         });
+        next();
       }
     });
   },
-  update(req, res) {
+  update(req, res, next) {
     const goal = new Goal({
       id: req.params.goalId,
       userId: req.params.userId,
@@ -70,11 +71,12 @@ export default {
           });
         } else {
           res.status(204).send();
+          next();
         }
       }
     });
   },
-  delete(req, res) {
+  delete(req, res, next) {
     const goalId = req.params.goalId;
     Goal.delete(goalId, (err, data) => {
       if (err) {
@@ -88,6 +90,7 @@ export default {
           });
         } else {
           res.status(204).send();
+          next();
         }
       }
     });

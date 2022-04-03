@@ -2,7 +2,7 @@ import Commitment from "../models/commitment.model.js";
 import uuidv4 from "uuid/v4.js";
 
 export default {
-  create(req, res) {
+  create(req, res, next) {
     const commitment = new Commitment({
       id: uuidv4(),
       userId: req.params.userId,
@@ -27,10 +27,11 @@ export default {
         res.status(201).send({
           message: `Commitment ${commitment.id} has been successfully created.`,
         });
+        next();
       }
     });
   },
-  update(req, res) {
+  update(req, res, next) {
     const commitment = new Commitment({
       id: req.params.commitmentId,
       userId: req.params.userId,
@@ -57,11 +58,12 @@ export default {
           });
         } else {
           res.status(204).send();
+          next();
         }
       }
     });
   },
-  delete(req, res) {
+  delete(req, res, next) {
     const commitmentId = req.params.commitmentId;
     Commitment.delete(commitmentId, (err, data) => {
       if (err) {
@@ -76,6 +78,7 @@ export default {
           });
         } else {
           res.status(204).send();
+          next();
         }
       }
     });
