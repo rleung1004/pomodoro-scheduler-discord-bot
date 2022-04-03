@@ -20,6 +20,7 @@ const Commitment = function (commitment) {
     (this.location = commitment.location),
     (this.name = commitment.name),
     (this.notes = commitment.notes),
+    (this.minutes = commitment.minutes),
     (this.repeats = commitment.repeats),
     (this.url = commitment.url),
     (this.startTime = commitment.startTime),
