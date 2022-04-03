@@ -1,5 +1,5 @@
 export default {
-  HOST: "143.198.156.138",
+  HOST: "localhost",
   USER: "admin",
   PASSWORD: "pomodoro",
   DB: "pomodoro",
