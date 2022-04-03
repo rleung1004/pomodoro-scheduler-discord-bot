@@ -58,6 +58,23 @@ export const updateGoalValidation = [
   body("ignoreDeadline").isBoolean(),
 ];
 
+export const createUserConfigValidation = [
+  param("userId").isString().matches(userIdPattern),
+  body("start").isInt(),
+  body("end").isInt(),
+];
+
+export const updateUserConfigValidation = [
+  param("userId").isString().matches(userIdPattern),
+  param("dayOfWeek").isInt(),
+  body("start").isInt(),
+  body("end").isInt(),
+  body("breaks").isArray(),
+  body("breaks.*").isInt(),
+  body("blockSize").isInt(),
+  body("interleaves").isInt(),
+];
+
 export const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {

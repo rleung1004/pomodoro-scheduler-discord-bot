@@ -25,7 +25,7 @@ Schedule.getUserSchedule = (userId, result) => {
       return;
     }
     // else not found:
-    result({ kind: "not_found" }, null);
+    result(null, null);
   });
 };
 
