@@ -8,7 +8,10 @@ export default function getAll(req, res) {
           err.message || "An error occurred while retrieving the requests.",
       });
     } else {
-      res.send(data);
+      res.send({
+        jwtToken: req.headers.authorization,
+        data,
+      });
     }
   });
 }
