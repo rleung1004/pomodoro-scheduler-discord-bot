@@ -7,13 +7,15 @@ export default {
       if (err) {
         res.status(500).send({
           message:
-            err.message || "An error occured while retrieving the schedule.",
+            err.message || "An error occurred while retrieving the schedule.",
         });
+        return;
       }
       if (!data) {
         res.status(404).send({
           message: `User ${userId} has no schedule.`,
         });
+        return;
       }
       res.status(200).send({
         message: `Schedule of ${userId}`,
