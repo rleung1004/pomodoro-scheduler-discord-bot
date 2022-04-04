@@ -14,6 +14,25 @@ const convertRepeatEnumArray = (repeatEnumArray) => {
   return `[${repeatEnumArray.map((e) => RepeatEnum[e])}]`;
 };
 
+const convertRepeatsIntegerToEnum = (repeats) => {
+  return repeats
+    .split(",")
+    .map((e) =>
+      e
+        .replaceAll(" ", "")
+        .replace("[", "")
+        .replace("]", "")
+        .replace("0", "MON")
+        .replace("1", "TUES")
+        .replace("2", "WED")
+        .replace("3", "THURS")
+        .replace("4", "FRI")
+        .replace("5", "SAT")
+        .replace("6", "SUN")
+    )
+    .join();
+};
+
 const Commitment = function (commitment) {
   (this.id = commitment.id),
     (this.userId = commitment.userId),
@@ -109,6 +128,9 @@ Commitment.getAllUserCommitments = (userId, result) => {
       result(err, null);
       return;
     }
+    res.forEach((commitment) => {
+      commitment.repeats = convertRepeatsIntegerToEnum(commitment.repeats);
+    });
     console.log("Found commitments ", res);
     result(null, res);
   });
