@@ -9,11 +9,13 @@ export default {
           message:
             err.message || "An error occured while retrieving the schedule.",
         });
+        return;
       }
       if (!data) {
         res.status(404).send({
           message: `User ${userId} has no schedule.`,
         });
+        return;
       }
       res.status(200).send({
         message: `Schedule of ${userId}`,
