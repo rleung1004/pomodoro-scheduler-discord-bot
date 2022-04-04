@@ -145,6 +145,9 @@ function signin(username, password) {
       return res.json();
     })
     .then((res) => {
+      jwt = res.jwtToken;
+      console.log(jwt);
+      res = res.data;
       const body = document.getElementById("body");
       body.innerHTML = "<div id='container'></div>"
       let table = document.createElement('table');
@@ -165,7 +168,6 @@ function signin(username, password) {
       table.appendChild(tr);
       
       for (const [_, element] of res.entries()) {
-        console.log(element.route, element.count);
         let tr = document.createElement('tr');   
 
         let td1 = document.createElement('td');
@@ -184,7 +186,18 @@ function signin(username, password) {
       document.getElementById('container').appendChild(table);
 
       if(document.body != null){
+        table.appendChild(document.createElement('br'));
         document.body.appendChild(table);
+
+        // JWT token div
+        jwtDiv = document.createElement('textarea');
+        jwtDiv.innerHTML = jwt;
+        document.body.appendChild(jwtDiv);
+
+        // JWT heading
+        tokenHeading = document.createElement('div');
+        tokenHeading.innerHTML = 'JWT Token';
+        document.body.appendChild(tokenHeading);
     }
          
       
