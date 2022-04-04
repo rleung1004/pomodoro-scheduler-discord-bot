@@ -47,17 +47,20 @@ router.post("/signin", function (req, res, next) {
       const groups =
         user.signInUserSession.accessToken.payload["cognito:groups"];
       if (groups && groups.includes("admin")) {
-        req.headers.authorization = `Bearer ${user.signInUserSession.idToken.jwtToken}`;
+        req.headers.authorization = `Bearer ${user.signInUserSession.accessToken.jwtToken}`;
         getAll(req, res);
       } else {
         res.status(200).send({
           message: "Authenticated",
-          idToken: user.signInUserSession.idToken.jwtToken,
+          idToken: user.signInUserSession.accessToken.jwtToken,
         });
       }
     })
     .catch((err) => {
       console.log(err);
+      res.status(401).send({
+        message: "Username and password combination is wrong",
+      });
     });
 });
 
