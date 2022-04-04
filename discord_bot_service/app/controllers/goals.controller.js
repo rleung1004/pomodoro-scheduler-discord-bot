@@ -38,7 +38,7 @@ export default {
       minTaskTime: req.body.minTaskTime,
       ignoreDeadline: req.body.ignoreDeadline,
     });
-    if (goal.totalTime < goal.minTaskTime) {
+    if (parseInt(goal.totalTime) < parseInt(goal.minTaskTime)) {
       res.status(400).send({
         message:
           "The minimum task time cannot be greater than the total time required.",
