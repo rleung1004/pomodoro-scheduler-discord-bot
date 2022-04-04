@@ -124,7 +124,6 @@ export default {
           });
           return;
         }
-        res.status(204).send();
         next();
       }
     });

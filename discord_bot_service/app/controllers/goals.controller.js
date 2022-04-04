@@ -51,9 +51,6 @@ export default {
           message: err.message || "An error occurred while creating the goal.",
         });
       } else {
-        res.status(201).send({
-          message: `goal ${goal.id} has been successfully created.`,
-        });
         next();
       }
     });
@@ -92,7 +89,6 @@ export default {
             message: `Goal ID ${goal.id} not found`,
           });
         } else {
-          res.status(204).send();
           next();
         }
       }
@@ -111,7 +107,6 @@ export default {
             message: `Goal ID ${goalId} not found`,
           });
         } else {
-          res.status(204).send();
           next();
         }
       }

@@ -17,10 +17,6 @@ export default {
           message: `No commitments found under user ${userId}`,
         });
       } else {
-        res.status(200).send({
-          message: `Commitments found under user ${userId}`,
-          commitments: data,
-        });
         next();
       }
     });
@@ -47,9 +43,6 @@ export default {
             err.message || "An error occurred while creating the commitment.",
         });
       } else {
-        res.status(201).send({
-          message: `Commitment ${commitment.id} has been successfully created.`,
-        });
         next();
       }
     });
@@ -80,7 +73,6 @@ export default {
             message: `Commitment ID ${commitment.id} not found`,
           });
         } else {
-          res.status(204).send();
           next();
         }
       }
@@ -100,7 +92,6 @@ export default {
             message: `Commitment ID ${goalId} not found`,
           });
         } else {
-          res.status(204).send();
           next();
         }
       }
