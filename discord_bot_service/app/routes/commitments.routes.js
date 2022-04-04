@@ -11,9 +11,11 @@ import { getUserConfig } from "../utils/getUserConfig.js";
 import commitments from "../controllers/commitments.controller.js";
 import { checkCommitmentOwnership } from "../utils/checkOwnership.js";
 import { updateSchedule } from "../utils/updateSchedule.js";
+import { incrementEndpointCount } from "../utils/incrementEndpointCount.js";
 
 router.get(
   "/:userId",
+  incrementEndpointCount,
   getAllCommitmentsValidation,
   validate,
   commitments.getAllByUser
@@ -21,6 +23,7 @@ router.get(
 
 router.put(
   "/:userId",
+  incrementEndpointCount,
   createCommitmentValidation,
   validate,
   getUserConfig,
@@ -29,6 +32,7 @@ router.put(
 );
 router.patch(
   "/:userId/:commitmentId",
+  incrementEndpointCount,
   updateCommitmentValidation,
   validate,
   getUserConfig,
