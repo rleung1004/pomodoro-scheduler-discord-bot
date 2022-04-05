@@ -8,6 +8,8 @@ const verifier = CognitoJwtVerifier.create({
 });
 
 export const authorizer = async (req, res, next) => {
+  console.log(req.headers);
+  console.log(req.body);
   let jwtToken;
   if (
     req.headers.authorization &&
