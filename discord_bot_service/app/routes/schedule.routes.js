@@ -6,8 +6,8 @@ import { incrementEndpointCount } from "../utils/incrementEndpointCount.js";
 
 router.get(
   "/:userId",
-  authorizer,
   incrementEndpointCount,
+  authorizer,
   schedule.getUserSchedule
 );
 

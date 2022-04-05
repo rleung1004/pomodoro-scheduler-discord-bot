@@ -17,6 +17,10 @@ export default {
           message: `No commitments found under user ${userId}`,
         });
       } else {
+        res.status(200).send({
+          message: `Commitments found under user ${userId}`,
+          commitments: data,
+        });
         next();
       }
     });
