@@ -38,7 +38,7 @@ export default {
       minTaskTime: req.body.minTaskTime,
       ignoreDeadline: req.body.ignoreDeadline,
     });
-    if (goal.totalTime < goal.minTaskTime) {
+    if (parseInt(goal.totalTime) < parseInt(goal.minTaskTime)) {
       res.status(400).send({
         message:
           "The minimum task time cannot be greater than the total time required.",
@@ -51,9 +51,6 @@ export default {
           message: err.message || "An error occurred while creating the goal.",
         });
       } else {
-        res.status(201).send({
-          message: `goal ${goal.id} has been successfully created.`,
-        });
         next();
       }
     });
@@ -73,7 +70,7 @@ export default {
       ignoreDeadline: req.body.ignoreDeadline,
     });
 
-    if (goal.totalTime < goal.minTaskTime) {
+    if (parseInt(goal.totalTime) < parseInt(goal.minTaskTime)) {
       res.status(400).send({
         message:
           "The minimum task time cannot be greater than the total time required.",
@@ -92,7 +89,6 @@ export default {
             message: `Goal ID ${goal.id} not found`,
           });
         } else {
-          res.status(204).send();
           next();
         }
       }
@@ -111,7 +107,6 @@ export default {
             message: `Goal ID ${goalId} not found`,
           });
         } else {
-          res.status(204).send();
           next();
         }
       }

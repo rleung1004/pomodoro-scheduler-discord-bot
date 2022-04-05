@@ -11,10 +11,21 @@ import { checkGoalOwnership } from "../utils/checkOwnership.js";
 import goals from "../controllers/goals.controller.js";
 import { getUserConfig } from "../utils/getUserConfig.js";
 import { updateSchedule } from "../utils/updateSchedule.js";
+import { incrementEndpointCount } from "../utils/incrementEndpointCount.js";
+import { authorizer } from "../utils/auth.js";
 
-router.get("/:userId", getAllGoalsValidation, validate, goals.getAllByUser);
+router.get(
+  "/:userId",
+  incrementEndpointCount,
+  authorizer,
+  getAllGoalsValidation,
+  validate,
+  goals.getAllByUser
+);
 router.put(
   "/:userId",
+  incrementEndpointCount,
+  authorizer,
   createGoalValidation,
   validate,
   goals.create,
@@ -22,6 +33,8 @@ router.put(
 );
 router.patch(
   "/:userId/:goalId",
+  incrementEndpointCount,
+  authorizer,
   updateGoalValidation,
   validate,
   getUserConfig,
@@ -31,6 +44,8 @@ router.patch(
 );
 router.delete(
   "/:userId/:goalId",
+  incrementEndpointCount,
+  authorizer,
   deleteGoalValidation,
   validate,
   checkGoalOwnership,

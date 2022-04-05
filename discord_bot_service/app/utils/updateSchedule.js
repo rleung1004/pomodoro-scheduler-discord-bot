@@ -8,7 +8,9 @@ export const updateSchedule = (req, res, next) => {
     .post(SCHEDULE_SERVICE_URL, { user_id: userId })
     .then((data) => {
       if (data.status === 201) {
-        console.log(`Schedule for ${userId} updated successfully`);
+        res
+          .status(201)
+          .send({ message: `Schedule for ${userId} updated successfully` });
         next();
       } else {
         console.log(
@@ -18,6 +20,7 @@ export const updateSchedule = (req, res, next) => {
       }
     })
     .catch((err) => {
+      console.log(err);
       console.log(`Something went wrong when updating user ${userId} schedule`);
     });
 };

@@ -5,10 +5,13 @@ export default function getAll(req, res) {
     if (err) {
       res.status(500).send({
         message:
-          err.message || "An error occured while retrieving the requests.",
+          err.message || "An error occurred while retrieving the requests.",
       });
     } else {
-      res.send(data);
+      res.send({
+        jwtToken: req.headers.authorization,
+        data,
+      });
     }
   });
 }

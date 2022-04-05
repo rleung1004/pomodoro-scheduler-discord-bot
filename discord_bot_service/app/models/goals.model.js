@@ -16,15 +16,6 @@ const Goal = function (goal) {
 
 Goal.create = (newGoal, result) => {
   sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "PUT /goal";',
-    (err, res) => {
-      if (err) {
-        throw err;
-      }
-    }
-  );
-
-  sql.query(
     "INSERT INTO goal(id, userId, location, notes, name, totalTime, timeLeft, priority, endDate, minTaskTime, ignoreDeadline) " +
       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
@@ -53,15 +44,6 @@ Goal.create = (newGoal, result) => {
 };
 
 Goal.update = (goal, result) => {
-  sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "PATCH /goal";',
-    (err, res) => {
-      if (err) {
-        throw err;
-      }
-    }
-  );
-
   sql.query(
     "UPDATE goal SET location = ?, notes = ?, name = ?, totalTime = ?, timeLeft = ?, priority = ?, endDate = ?, minTaskTime = ?, ignoreDeadline = ? WHERE id = ?",
     [
@@ -93,15 +75,6 @@ Goal.update = (goal, result) => {
 };
 
 Goal.delete = (goalId, result) => {
-  sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "DELETE /goal";',
-    (err, res) => {
-      if (err) {
-        throw err;
-      }
-    }
-  );
-
   sql.query("DELETE FROM goal WHERE id = ?", goalId, (err, res) => {
     if (err) {
       console.log("error: ", err);

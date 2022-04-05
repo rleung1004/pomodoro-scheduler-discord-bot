@@ -14,6 +14,25 @@ const convertRepeatEnumArray = (repeatEnumArray) => {
   return `[${repeatEnumArray.map((e) => RepeatEnum[e])}]`;
 };
 
+const convertRepeatsIntegerToEnum = (repeats) => {
+  return repeats
+    .split(",")
+    .map((e) =>
+      e
+        .replaceAll(" ", "")
+        .replace("[", "")
+        .replace("]", "")
+        .replace("0", "MON")
+        .replace("1", "TUES")
+        .replace("2", "WED")
+        .replace("3", "THURS")
+        .replace("4", "FRI")
+        .replace("5", "SAT")
+        .replace("6", "SUN")
+    )
+    .join();
+};
+
 const Commitment = function (commitment) {
   (this.id = commitment.id),
     (this.userId = commitment.userId),
@@ -29,15 +48,6 @@ const Commitment = function (commitment) {
 };
 
 Commitment.create = (newCommitment, result) => {
-  sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "PUT /commitment";',
-    (err, res) => {
-      if (err) {
-        throw err;
-      }
-    }
-  );
-
   sql.query(
     "INSERT INTO commitment(id, userId, location, notes, url, name, repeats, startTime, endDate, minutes)" +
       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -66,15 +76,6 @@ Commitment.create = (newCommitment, result) => {
 };
 
 Commitment.update = (commitment, result) => {
-  sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "PATCH /commitment";',
-    (err, res) => {
-      if (err) {
-        throw err;
-      }
-    }
-  );
-
   sql.query(
     "UPDATE commitment SET location = ?, name = ?, notes = ?, repeats = ?, url = ?, startTime = ?, endDate = ?, minutes = ? WHERE id = ?",
     [
@@ -105,15 +106,6 @@ Commitment.update = (commitment, result) => {
 };
 
 Commitment.delete = (commitmentId, result) => {
-  sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "DELETE /commitment";',
-    (err, res) => {
-      if (err) {
-        throw err;
-      }
-    }
-  );
-
   sql.query("DELETE FROM commitment WHERE id = ?", commitmentId, (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -136,6 +128,9 @@ Commitment.getAllUserCommitments = (userId, result) => {
       result(err, null);
       return;
     }
+    res.forEach((commitment) => {
+      commitment.repeats = convertRepeatsIntegerToEnum(commitment.repeats);
+    });
     console.log("Found commitments ", res);
     result(null, res);
   });

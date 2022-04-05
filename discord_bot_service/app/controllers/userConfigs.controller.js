@@ -7,7 +7,7 @@ const MAX_BLOCK_SIZE = 240;
 const DEFAULT_BREAKS = "[10, 30]";
 const DEFAULT_BLOCK_SIZE = 15;
 const DEFAULT_INTERLEAVES = 3;
-const MINUTES_IN_DAY = 3600;
+const MINUTES_IN_DAY = 1439;
 const MIN_DAY = 0;
 const MAX_DAY = 6;
 
@@ -22,17 +22,23 @@ export default {
       blockSize: DEFAULT_BLOCK_SIZE,
       interleaves: DEFAULT_INTERLEAVES,
     });
-    if (userConfig.start > userConfig.end) {
+    if (parseInt(userConfig.start) > parseInt(userConfig.end)) {
       res.status(400).send({
         message: "Start time cannot be after end time.",
       });
       return;
-    } else if (userConfig.start < 0 || userConfig.start > MINUTES_IN_DAY) {
+    } else if (
+      parseInt(userConfig.start) < 0 ||
+      parseInt(userConfig.start) > MINUTES_IN_DAY
+    ) {
       res.status(400).send({
         message: "Start time cannot exceed the number of minutes in a day.",
       });
       return;
-    } else if (userConfig.end < 0 || userConfig.end > MINUTES_IN_DAY) {
+    } else if (
+      parseInt(userConfig.end) < 0 ||
+      parseInt(userConfig.end) > MINUTES_IN_DAY
+    ) {
       res.status(400).send({
         message: "End time cannot exceed the number of minutes in a day.",
       });
@@ -45,7 +51,7 @@ export default {
             message:
               err.message || "An error occurred while creating a user config.",
           });
-          return;
+          next();
         }
       });
     }
@@ -67,24 +73,30 @@ export default {
       interleaves: req.body.interleaves,
     });
 
-    if (dayOfWeek < MIN_DAY || dayOfWeek > MAX_DAY) {
+    if (parseInt(dayOfWeek) < MIN_DAY || parseInt(dayOfWeek) > MAX_DAY) {
       res.status(400).send({
         message: "Day of week must be an integer between 0 and 6.",
       });
       return;
     }
 
-    if (userConfig.start > userConfig.end) {
+    if (parseInt(userConfig.start) > parseInt(userConfig.end)) {
       res.status(400).send({
         message: "Start time cannot be after end time.",
       });
       return;
-    } else if (userConfig.start < 0 || userConfig.start > MINUTES_IN_DAY) {
+    } else if (
+      parseInt(userConfig.start) < 0 ||
+      parseInt(userConfig.start) > MINUTES_IN_DAY
+    ) {
       res.status(400).send({
         message: "Start time cannot exceed the number of minutes in a day.",
       });
       return;
-    } else if (userConfig.end < 0 || userConfig.end > MINUTES_IN_DAY) {
+    } else if (
+      parseInt(userConfig.end) < 0 ||
+      parseInt(userConfig.end) > MINUTES_IN_DAY
+    ) {
       res.status(400).send({
         message: "End time cannot exceed the number of minutes in a day.",
       });
@@ -124,7 +136,6 @@ export default {
           });
           return;
         }
-        res.status(204).send();
         next();
       }
     });

@@ -5,15 +5,6 @@ const Schedule = function (schedule) {
 };
 
 Schedule.getUserSchedule = (userId, result) => {
-  sql.query(
-    'UPDATE request SET count = count + 1 WHERE route = "GET /schedule/{userId}";',
-    (err, res) => {
-      if (err) {
-        throw err;
-      }
-    }
-  );
-
   sql.query(`SELECT * FROM schedule WHERE userId = ?`, userId, (err, res) => {
     if (err) {
       console.log("error: ", err);
