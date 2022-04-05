@@ -52,7 +52,7 @@ router.post("/signin", function (req, res, next) {
       } else {
         res.status(200).send({
           message: "Authenticated",
-          idToken: user.signInUserSession.accessToken.jwtToken,
+          accessToken: user.signInUserSession.accessToken.jwtToken,
         });
       }
     })
